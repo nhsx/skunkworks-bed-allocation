@@ -1,0 +1,14 @@
+.faculty-bootstrap .btn {
+  border-width: 2px;
+  border-radius: 0;
+}
+
+.faculty-bootstrap .graph-icon-buttons .btn-outline-light {
+  &:not(:disabled):not(.disabled) {
+    background-color: theme-color("light");
+
+    &.active, &:hover {
+      background-color: transparent;
+    }
+  }
+}

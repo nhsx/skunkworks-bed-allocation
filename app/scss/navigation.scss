@@ -1,0 +1,23 @@
+.faculty-bootstrap .nav-item {
+  padding: 0 1rem;
+}
+
+.faculty-bootstrap .nav-SD-style.nav-item {
+  & .nav-link {
+    padding: 0.5rem 0 calc(0.5rem - 2px);
+    border-bottom: 2px solid transparent;
+    color: #1C1C1C;
+    transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    &:hover {
+      border-color: #FA7268;
+      color: #FA7268;
+      transition: color 0.05s ease-in-out, border-color 0.05s ease-in-out;
+    }
+  }
+
+  &.active .nav-link {
+    border-bottom: 2px solid #FA7268;
+    padding-bottom: calc(0.5rem - 2px);
+    color: #FA7268;
+  }
+}

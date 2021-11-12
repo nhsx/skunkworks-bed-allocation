@@ -1,0 +1,77 @@
+.faculty-bootstrap .Select-control {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 2px solid gray("900");
+  color: gray("900");
+  display: table;
+  border-spacing: 0;
+  border-collapse: separate;
+  height: 40px;
+  overflow: hidden;
+}
+
+.faculty-bootstrap .is-focused:not(.is-open) > .Select-control {
+  border-color: gray("900");
+  box-shadow: 0 0;
+}
+
+.faculty-bootstrap .Select-menu-outer {
+  border-radius: 0;
+  background-color: #fff;
+  border: 1px solid gray("900");
+  box-shadow: 0 0;
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.faculty-bootstrap .Select--multi .Select-value {
+  background-color: #fff;
+  border-radius: 0;
+  border: 1px solid gray("500");
+  color: gray("500");
+  display: inline-block;
+  font-size: 0.9em;
+  line-height: 1.4;
+  margin-left: 5px;
+  margin-top: 5px;
+  vertical-align: top;
+}
+
+.faculty-bootstrap .Select--multi .Select-value-icon {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-right: 1px solid gray("500");
+  padding: 2px 5px;
+}
+
+.faculty-bootstrap .Select--multi .Select-value-icon:focus,
+.faculty-bootstrap .Select--multi .Select-value-icon:hover {
+  background-color: gray("300");
+  color: gray("700");
+}
+
+.faculty-bootstrap .Select--multi .Select-value-label {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  color: gray("700");
+}
+
+.faculty-bootstrap .VirtualizedSelectOption {
+  // this is needed to stop background color masking border
+  left: 1px!important;
+}
+
+.faculty-bootstrap .VirtualizedSelectOption:hover {
+  background-color: #FEEDEC;
+}
+
+.faculty-bootstrap .VirtualizedSelectFocusedOption {
+  background-color: #FEEDEC;
+}

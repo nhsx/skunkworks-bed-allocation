@@ -1,0 +1,3 @@
+Field,Description,Entry options,Type,Source
+ADMIT_DTTM,"Date and time of admission, aggregated to every hour",e.g. ’05/06/2019 15:00’,datetime64[ns],PAS - Inpatient Spells
+Total,Total number of admissions for Medicine and Surgery patients for that hour,0-50+,int64,Aggregated from ADMIT_DTTM in PAS - Inpatient Spells

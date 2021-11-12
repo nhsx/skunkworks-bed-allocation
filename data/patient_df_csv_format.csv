@@ -1,0 +1,19 @@
+Field,Description,Entry options,Type,Source
+DIM_PATIENT_ID,Unique patient ID,-,int64,PAS - Patient Dimension and PAS - Inpatient Spells
+SEX_DESC,Sex of patient,"Male, Female",object,PAS - Patient Dimension
+AGE,Age of patient,0-100+,int64,Calculated using ADMIT_DTTM in PAS - Inpatient Spells and BIRTH_YEAR in PAS - Patient Dimension
+COVID Positive,Whether patient is COVID positive,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+COVID Re-Swab,Whether patient is awaiting a re-swab for COVID,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+Dementia,Whether patient has dementia,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+End Of Life,Whether patient is on an end of life pathway,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+Exposed to COVID,Whether patient has been exposed to COVID,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+Falls,Whether patient is a falls risk,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+Visual Impairment,Whether patient is visually impaired,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+Visual Supervision,Whether patient needs to be visually supervised,"0, 1",int64,Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup
+ELECTIVE,Whether the patient is being admitted for an elective procedure,"0, 1",int64,Calculated using DTA_DTTM (only used for elective patients) in PAS - Inpatient Spells
+ADMIT_DIV,Which division the patient is admitted to,"Medicine, Surgery",object,Mapped from DIM_ADM_SPECT_ID in PAS - Inpatient Spells and Specialty lookup table
+ADMIT_SPEC,Which specialty the patient is admitted to,"Cardiology, Urology, General, etc.",object,Mapped from DIM_ADM_SPECT_ID in PAS - Inpatient Spells and Specialty lookup table
+ADMIT_DTTM,The date and time of the patient admission,e.g. ’05/06/2019 15:43’,datetime64[ns],PAS - Inpatient Spells
+ADMIT_DAY,The day of the patient admission,0-6,int64,Calculated from ADMIT_DTTM in PAS - Inpatient Spells
+ADMIT_HOUR,The hour of the patient admission,0-23,int64,Calculated from ADMIT_DTTM in PAS - Inpatient Spells
+LOS_HOURS,The length of stay in hours of the patient,1-1000+,int64,Calculated from ADMIT_DTTM and DISCH_DTTM in PAS - Inpatient Spells

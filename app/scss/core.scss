@@ -1,0 +1,109 @@
+$theme-colors: (
+  "primary": #005EB8,
+  "secondary": #9C9C9C,
+  "success": #12A864,
+  "warning": #F4CA1A,
+  "danger": #E81936,
+  "info": #05C5C5,
+  "light": #E8E8E8,
+  "dark": #1C1C1C
+);
+
+$body-bg: #E8E8E8;
+$gray-100: #F9F9F9;
+$gray-200: #E8E8E8;
+$gray-300: #CFCFCF;
+$gray-400: #B5B5B5;
+$gray-500: #9C9C9C;
+$gray-600: #828282;
+$gray-700: #606060;
+$gray-800: #3E3E3E;
+$gray-900: #1C1C1C;
+
+@import "./bootstrap/bootstrap";
+
+/* --------- Button --------- */
+@import './button';
+
+/* --------- Card --------- */
+@import './card';
+
+/* --------- Dropdown --------- */
+@import './dropdown';
+
+/* --------- Navigation --------- */
+@import './navigation';
+
+/* --------- Slider --------- */
+@import './slider';
+
+
+/* --------- Link hover --------- */
+a:hover {
+  text-decoration: none;
+}
+
+a.text-muted:hover {
+  color: gray("700")!important;
+}
+
+/* --------- Chevron rotater --------- */
+.collapser {
+  cursor: pointer;
+}
+
+.fa-chevron-right {
+  transition: transform 0.2s ease-in-out 0s;
+}
+
+.collapser-open .fa-chevron-right {
+  transform: rotate(90deg);
+}
+
+/* --------- Dash config --------- */
+._dash-undo-redo {
+  display: none;
+}
+
+/* --------- Blob Colours --------- */
+.blob-yellow {
+  color: #F4CA1A;
+  background-color: #fff;
+}
+
+.blob-red {
+  color: #E81936;
+  background-color: #fff;
+}
+
+.blob-green {
+  color: #12A864;
+  background-color: #fff;
+}
+
+.blob-purple {
+  color: #9E37AD;
+  background-color: #fff;
+}
+
+/* --------- Font overrides --------- */
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.text-ibm-plex-sans {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.text-crimson {
+  font-family: "Crimson Text", serif;
+}
+
+/* --------- button disabled colors --------- */
+.btn.disabled, .btn:disabled {
+  opacity: 0.35;
+}
+
+.false-button .btn.disabled, .false-button .btn:disabled {
+  opacity: 1.0;
+}
