@@ -1,6 +1,6 @@
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
 
-![Banner](docs/Logo-Faculty-700x280px-white-rgb.png)
+![Banner](docs/Logo-Faculty-700x280px-white-rgb.png | width=100)
 
 # NHS AI Lab Skunkworks project: Bed Tetris
 
