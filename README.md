@@ -1,5 +1,7 @@
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
 
+![Banner](docs/Logo-Faculty-700x280px-white-rgb.png)
+
 # NHS AI Lab Skunkworks project: Bed Tetris
 
 The NHSX AI Skunkworks team and the Kettering General Hospital NHS Foundation Trust (KGH) commissioned a 12-week project via the Accelerated Capability Environment (ACE) to test whether Machine Learning (ML) can assist with the ‘bed tetris’ challenge.
