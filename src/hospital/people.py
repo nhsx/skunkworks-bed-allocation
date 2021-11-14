@@ -22,7 +22,7 @@ class Patient:
     age: Optional[int] = None
     is_known_covid: bool = False
     is_suspected_covid: bool = False
-    is_acute_surgical: bool = False  # TODO remove(redundant with high acuity)
+    is_acute_surgical: bool = False
     is_elective: bool = False
     needs_mobility_assistence: bool = False
     is_dementia_risk: bool = False

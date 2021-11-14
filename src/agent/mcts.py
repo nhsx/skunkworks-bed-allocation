@@ -70,8 +70,6 @@ class Node(NodeMixin):
         return node
 
     def expand(self, patients):
-        # TODO add expande behaviour for leaf node when forecast is finished
-        # e.g., if node.is_leaf: node.backpropagate([], []) else:
         if not self.is_expandable():
             return
 
@@ -84,7 +82,6 @@ class Node(NodeMixin):
             hospital_copy, patients
         )
         if not possible_allocations:
-            # TODO add no empty beds action with high penalty
             print("Hospital full, cannot allocate patients")
             return
 
