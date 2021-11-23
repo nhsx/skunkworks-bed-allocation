@@ -8,11 +8,11 @@ The user can build virtual hospitals containing the desired number of wards, roo
 
 This document is also available as a [notebook](../../notebooks/1.Virtual_Hospital_Environment.ipynb).
 
-## Create a Hospital
+## 1. Create a Hospital
 
 In this example, our hospital will consist of 4 medical wards and 2 surgical wards as detailed below. Within each ward we will add a number of rooms (bed bays and side rooms) as well as ward and room restrictions.
 
-### Import required modules
+### 1.1 Import required modules
 
 ```python
 import cloudpickle
@@ -26,7 +26,7 @@ from hospital.restrictions import room as R
 from hospital.people import Patient
 ```
 
-### Initialise the hospital
+### 1.2 Initialise the hospital
 
 Initialise the hospital object with a name. We can then set up a list of ward definitions, where wards can either be medical or surgial. In addition a list of specialties can be added, as well as ward sex if applicable. Finally, we apply some ward level restrictions. A full set of available ward restrictions are within the [`hospital.restrictions.ward`](restrictions/ward.py) submodule. 
 
@@ -35,7 +35,7 @@ Initialise the hospital object with a name. We can then set up a list of ward de
 hospital = Hospital("H1")
 ```
 
-### Create the wards
+### 1.3 Create the wards
 
 ```python
 # Setup Wards and restrictions
@@ -119,7 +119,7 @@ wards = [
 hospital.wards
 ```
 
-### Add rooms and beds
+### 1.4 Add rooms and beds
 
 Below we create a generator to yield ward names, a dictionary to define the number of beds and siderooms we wish to add to each ward and a helper function that generates the bed bays and siderooms. In this function each side room has a single bed and the remaining beds are split into bed bays with roughly 6 beds each but the user can define whatever configuration they desire. We also apply a NoMixedSex room restriction to all the bed bays, additional room level restrictions are available in the [`hospital.restrictions.room`](restrictions/room.py) sub module.
 
@@ -186,11 +186,70 @@ for ward in wards:
 print(f"Rooms: {len(hospital.rooms)},Beds: {len(hospital.beds)}")
 ```
 
-## Exporting the hospital
+### 1.5 Exporting the hospital
 
 Now the hospital is generated, we can save it as a cloudpickle for further use:
 
 ```python
 with open("../data/hospital.pkl", "wb") as f:
     cloudpickle.dump(hospital, f)
+```
+
+## 2. Admitting Patients and calculating penalties
+
+Patients can be created using the patient data class [`hospital.people.Patient`](hospital/people.py). They have several attributes that are relevant to the hospital restrictions. Some of these attributes may trigger a patient level restriction to be attached to the patient, e.g., Patient needs a side room. 
+
+Below we create a female, medical patient that is immunosuppressed and needs a side room. We then demonstrate how to admit this patient to different beds and calculate the penalty. 
+
+### 2.1 Create a new patient
+
+```python
+# there are many additional attributes that are false by default, such as covid status.
+patient = Patient(
+    name="patient",
+    sex="female",
+    department="medicine",
+    specialty="general",
+    is_immunosupressed=True,
+)
+
+# you can see that the patient has a sideroom restrictions because of their immunosuppression 
+patient
+```
+
+### 2.2 Admit the patient
+
+```python
+# lets view the hospital to pick a room
+hospital.render()
+```
+
+```python
+# lets admit the patient to a bed bay in ward A
+hospital.admit(patient, "B002")
+print(hospital.patients)
+```
+
+### 2.3 Check allocation penalty
+
+```python
+# now lets check the penalty for the hospital
+result = hospital.eval_restrictions()
+total_penalty = result["score"]
+broken_restrictions = result["names"]
+print(f"Total penalty: {total_penalty}")
+print(f"Broken restrictions: {broken_restrictions}")
+```
+
+This allocation results in a penalty of 10 because the `NeedsSideRoom` restriction is violated. We can discharge this patient from this specific bed and try a new bed. This time we admit them to a side room, and can see that that restriction is no longer broken.
+
+```python
+hospital.discharge(patient) # alternatively try hospital.clear() to discharge all patients
+hospital.admit(patient, "B000")
+
+new_result = hospital.eval_restrictions()
+new_total_penalty = new_result["score"]
+new_broken_restrictions = new_result["names"]
+print(f"Total penalty: {new_total_penalty}")
+print(f"Broken restrictions: {new_broken_restrictions}")
 ```
