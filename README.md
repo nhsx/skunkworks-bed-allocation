@@ -25,7 +25,7 @@ to collaborate closely with KGH to develop a Proof of Concept (PoC) to demonstra
 
 This project was subject to a Data Protection Impact Assessment (DPIA), ensuring the protection of the data used in line with the [UK Data Protection Act 2018](https://www.legislation.gov.uk/ukpga/2018/12/contents/enacted) and [UK GDPR](https://ico.org.uk/for-organisations/dp-at-the-end-of-the-transition-period/data-protection-and-the-eu-in-detail/the-uk-gdpr/). No data or trained models are shared in this repository.
 
-## Description
+## Overview
 
 This project consists of 4 components:
 <ol>
@@ -43,7 +43,7 @@ The deman forecast components including the Bayesian time series model are withi
 
 The UI component is built with Plotly Dash and designed to work with synthetic data.
 
-## Installation
+## Getting Started
 
 This project requires Python 3, If your system is running an older version
 of Python we recommend creating a conda environment with Python 3.9 to install
