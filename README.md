@@ -34,15 +34,7 @@ Component|Description|Documentation
 Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hospital)
 Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints||`src/agent`
 Demand Forecast|Generates a forecast for bed demand based on historical data||`src/forecasting`
-UI|A web-based frontend that integrates the virtual hospital, allocation and demand forecast components||`app`
-
-The virtual hospital environment is within the `hospital` submodule (`src/hospital`). Guidance on usage is provided in `1.Virtual_Hospital_Environment.ipynb` notebook. 
-
-The Allocation agents are within the `agent` submodule (`src/agent`). Guidance on usage and full documentation of the method if provided in the notebooks `2.Greedy_Allocation.ipynb` and `3.MCTS_Allocation.ipynb`. 
-
-The deman forecast components including the Bayesian time series model are within the `forecasting` submodule (`src/forecasting`). However, to comply with IG regulations, the training data and model are not provdided. PDF versions of the forcasting notebooks are provided in `docs/`, along with schema information on the PAS and Patient Flow fields used, for pedagogical purposes. 
-
-The UI component is built with Plotly Dash and designed to work with synthetic data.
+UI|A web-based frontend built with Plotly Dash that integrates the virtual hospital, allocation and demand forecast components||`app`
 
 ## Getting Started
 
