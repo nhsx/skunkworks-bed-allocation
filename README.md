@@ -56,6 +56,13 @@ To install in dev mode with the [Pytest](https://docs.pytest.org/en/6.2.x/) test
 
 To launch the UI run `python app/run.py`.
 
+## NHS AI Lab Skunkworks
+The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
+
+Find out more about the [NHS AI Lab Skunkworks](https://www.nhsx.nhs.uk/ai-lab/ai-lab-programmes/skunkworks/).
+Join our [Virtual Hub](https://future.nhs.uk/connect.ti/system/text/register) to hear more about future problem-sourcing event opportunities.
+Get in touch with the Skunkworks team at [aiskunkworks@nhsx.nhs.uk](aiskunkworks@nhsx.nhs.uk).
+
 ## Licence
 
 Unless stated otherwise, the codebase is released under [the MIT Licence][mit].
