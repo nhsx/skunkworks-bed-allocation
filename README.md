@@ -1,4 +1,5 @@
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
+[![MIT License](https://img.shields.io/badge/License-MIT-lightgray.svg)](LICENSE)
 
 ![Banner](docs/Logo-Faculty-700x280px-white-rgb.png)
 
@@ -43,3 +44,15 @@ To install in dev mode with the [Pytest](https://docs.pytest.org/en/6.2.x/) test
 ```pip install -e ."[testing]"```.
 
 To launch the UI run `python app/run.py`.
+
+## Licence
+
+Unless stated otherwise, the codebase is released under [the MIT Licence][mit].
+This covers both the codebase and any sample code in the documentation.
+
+The documentation is [© Crown copyright][copyright] and available under the terms
+of the [Open Government 3.0][ogl] licence.
+
+[mit]: LICENCE
+[copyright]: http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/
+[ogl]: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
