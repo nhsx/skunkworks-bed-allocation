@@ -121,7 +121,7 @@ hospital.wards
 
 ### 1.4 Add rooms and beds
 
-Below we create a generator to yield ward names, a dictionary to define the number of beds and siderooms we wish to add to each ward and a helper function that generates the bed bays and siderooms. In this function each side room has a single bed and the remaining beds are split into bed bays with roughly 6 beds each but the user can define whatever configuration they desire. We also apply a NoMixedSex room restriction to all the bed bays, additional room level restrictions are available in the [`hospital.restrictions.room`](restrictions/room.py) sub module.
+Below we create a generator to yield ward names, a dictionary to define the number of beds and siderooms we wish to add to each ward and a helper function that generates the bed bays and siderooms. In this function each side room has a single bed and the remaining beds are split into bed bays with roughly 6 beds each but the user can define whatever configuration they desire. We also apply a `NoMixedSex` room restriction to all the bed bays, additional room level restrictions are available in the [`hospital.restrictions.room`](restrictions/room.py) sub module.
 
 ```python
 # Create an iterator of IDs to avoid duplicating names
@@ -176,7 +176,7 @@ def generate_rooms(ward, ward_to_room_map, room_ids, bed_ids):
     return rooms
 ```
 
-We can now interate through each ward and create the required rooms:
+We can now iterate through each ward and create the required rooms:
 
 ```python
 for ward in wards:
