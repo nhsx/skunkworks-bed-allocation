@@ -1,5 +1,6 @@
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
 [![MIT License](https://img.shields.io/badge/License-MIT-lightgray.svg)](LICENSE)
+![Python Version](https://img.shields.io/badge/Python-3.9.0-blue.svg)
 
 ![Banner](docs/Logo-Faculty-700x280px-white-rgb.png)
 
