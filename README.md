@@ -4,16 +4,22 @@
 
 ![Banner of NHS AI Lab Skunkworks ](docs/banner.png)
 
-# NHS AI Lab Skunkworks project: Bed Tetris
+# NHS AI Lab Skunkworks project: Bed Allocation
 
-The NHSX AI Skunkworks team and the Kettering General Hospital NHS Foundation Trust (KGH) commissioned a 12-week project via the Accelerated Capability Environment (ACE) to test whether Machine Learning (ML) can assist with the ‘bed tetris’ challenge.
+> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, Bed Allocation aims to explore whether machine learning can enable both site managers and less experienced staff members to allocate and optimise patient movement and safety within the hospital.
 
-Faculty, a world leading applied AI company was engaged 
-to collaborate closely with KGH to develop a Proof of Concept (PoC) to demonstrate how artificial intelligence (AI) could be used to enable both site managers and less experienced staff members to allocate and optimise patient movement and safety within the hospital. 
+Bed Allocation was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
-## Intended Purpose
+## Intended Use
 
 The PoC Hospital Bed Allocation Tool (the "Product") is provided strictly and only as a Proof-of-Concept. It is released for demonstration purposes only. In its current state the Product must not be integrated into any live hospital IT infrastructure and it is not suitable for use as a live service. It is being offered as prototype software and has been subject only to limited internal testing only. The Product is provided as-is and no guarantees are made as to its performance. Faculty makes no representation, warranty or undertaking, express or implied, as to the functionality, safety, accuracy, reliability, completeness or reasonableness of the Product or its performance. Faculty does not accept any liability whatsoever for any direct, consequential or indirect loss arising, directly or indirectly, from any use or reliance on this Product. 
+
+## Background
+
+The NHS AI Lab Skunkworks team and the Kettering General Hospital NHS Foundation Trust (KGH) commissioned a 12-week project via the Accelerated Capability Environment (ACE) to test whether Machine Learning (ML) can assist with bed allocation.
+
+Faculty, an applied AI company, was engaged 
+to collaborate closely with KGH to develop a Proof of Concept (PoC) to demonstrate how artificial intelligence (AI) could be used to enable both site managers and less experienced staff members to allocate and optimise patient movement and safety within the hospital. 
 
 ## Description
 
