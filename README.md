@@ -28,12 +28,13 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 ## Overview
 
 This project consists of 4 components:
-<ol>
-<li> Virtual Hospital Environment
-<li> Allocation Agents
-<li> Demand Forecast
-<li> UI
-</ol>
+
+Component|Description|Documentation
+---|---|---
+Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hospital)
+Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints||`src/agent`
+Demand Forecast|Generates a forecast for bed demand based on historical data||`src/forecasting`
+UI|A web-based frontend that integrates the virtual hospital, allocation and demand forecast components||`app`
 
 The virtual hospital environment is within the `hospital` submodule (`src/hospital`). Guidance on usage is provided in `1.Virtual_Hospital_Environment.ipynb` notebook. 
 
