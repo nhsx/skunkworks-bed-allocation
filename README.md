@@ -2,7 +2,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-lightgray.svg)](LICENSE)
 ![Python Version](https://img.shields.io/badge/Python-3.9.0-blue.svg)
 
-![Banner](docs/Logo-Faculty-700x280px-white-rgb.png)
+![Banner of NHS AI Lab Skunkworks ](docs/banner.png)
 
 # NHS AI Lab Skunkworks project: Bed Tetris
 
