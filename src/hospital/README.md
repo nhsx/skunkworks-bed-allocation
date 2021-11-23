@@ -6,7 +6,7 @@ The virtual hospital environment comprises several components that can be tailor
 
 The user can build virtual hospitals containing the desired number of wards, rooms and beds. In addition, the virtual hospital encodes the allocation restrictions and associated penalties that apply to the hospital, as well as the data structure for patients. We have encoded different types of ward (medical, surgical) and rooms (bed bays, side rooms) to cater for a broad range of allocation rules. In addition, certain restrictions apply specifically to a patient and are thus contained within the patient class (e.g. if a patient requires a sideroom).
 
-This document is also available as a [notebook](../notebooks/1.Virtual_Hospital_Environment.ipynb).
+This document is also available as a [notebook](../../notebooks/1.Virtual_Hospital_Environment.ipynb).
 
 ## Create a Hospital
 
