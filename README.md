@@ -6,13 +6,13 @@
 
 # NHS AI Lab Skunkworks project: Bed Allocation
 
-> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, Bed Allocation aims to explore whether machine learning can enable both site managers and less experienced staff members to allocate and optimise patient movement and safety within the hospital.
+> A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, Bed Allocation aims to explore whether machine learning can effectively aid bed management in Kettering General Hospital.
 
 Bed Allocation was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
 ## Intended Use
 
-The PoC Hospital Bed Allocation Tool (the "Product") is provided strictly and only as a Proof-of-Concept. It is released for demonstration purposes only. In its current state the Product must not be integrated into any live hospital IT infrastructure and it is not suitable for use as a live service. It is being offered as prototype software and has been subject only to limited internal testing only. The Product is provided as-is and no guarantees are made as to its performance. Faculty makes no representation, warranty or undertaking, express or implied, as to the functionality, safety, accuracy, reliability, completeness or reasonableness of the Product or its performance. Faculty does not accept any liability whatsoever for any direct, consequential or indirect loss arising, directly or indirectly, from any use or reliance on this Product. 
+This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate different approaches to forecasting and bed allocation using machine learning. It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
 
 ## Background
 
