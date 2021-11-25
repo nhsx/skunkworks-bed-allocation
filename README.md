@@ -32,7 +32,7 @@ This project consists of 4 components:
 Component|Description|Documentation
 ---|---|---
 Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hospital)
-Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints||`src/agent`
+Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints|[`src/agent`](src/agent)
 Demand Forecast|Generates a forecast for bed demand based on historical data||`src/forecasting`
 UI|A web-based frontend built with Plotly Dash that integrates the virtual hospital, allocation and demand forecast components||`app`
 
