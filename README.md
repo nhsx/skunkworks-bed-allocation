@@ -10,6 +10,8 @@
 
 Bed Allocation was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
+![Screenshot of the user interface](docs/UI.png)
+
 ## Intended Use
 
 This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate different approaches to forecasting and bed allocation using machine learning. It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
@@ -35,6 +37,11 @@ Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hos
 Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints|[`src/agent`](src/agent)
 Demand Forecast|Generates a forecast for bed demand based on historical data|[`src/forecasting`](src/forecasting)
 UI|A web-based frontend built with Plotly Dash that integrates the virtual hospital, allocation and demand forecast components|`app`
+
+Using historical admissions data, the forecast model feeds into the allocation agent (for Monte Carlo Tree Search) and suggests the best available bed for an incoming patient:
+
+![Overview of how components interact](docs/overview.png)
+
 
 ## Getting Started
 
