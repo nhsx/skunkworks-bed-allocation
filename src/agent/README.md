@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Once a virtual hospital has been created and populated, we can allocate incoming patients to best bed. 
+Once a virtual hospital has been created and populated, we can allocate incoming patients to the best bed. 
 
 There are two approaches to allocating patients to beds provided in this repository:
 
@@ -101,12 +101,9 @@ A full review of MCTS is available in [Browne et al., 2012](http://ccg.doc.gold.
 
 Broadly speaking MCTS randomly explores a decision space, building a tree of connected moves and their associated rewards. Over multiple iterations the MCTS determines which decisions are most likely to result in a positive outcome. Ultimately the best decision is the one that provides the best long term reward, the definition of which depends on the specific domain. For example, when creating a MCTS agent to play a board game, the long term reward would be a 0 or 1 depending on whether you won or lost the game after making the current move. 
 
-In the context of bed allocation we do not have a natural end state. Therefore the long term reward is determined as the total reward incurred after N time has passed according to the equation below. Here $R_{n}$ represents a reward associated with  the state of the hospital at a given time step, $\gamma \epsilon [0, 1]$ is the discount factor. The reward associated with a hospital state is $1 - total penalties$ incurred. The first term in the equation, $R_{1}$, is the immediate reward associated with the current allocation i.e., the greedy allocation score, and the subsequent terms are rewards associated with future states, where the discount factor weighs the relative importance of these future states against the current state. 
-$$ 
-\begin{align}
-R = R_{1} + \gamma R_{2} +\gamma^{2}R_{3} ... +\gamma^{N}R_{N}
-\end{align}
-$$
+In the context of bed allocation we do not have a natural end state. Therefore the long term reward is determined as the total reward incurred after N time has passed according to the equation below. Here <img src="https://render.githubusercontent.com/render/math?math=R_{n}"> represents a reward associated with  the state of the hospital at a given time step, <img src="https://render.githubusercontent.com/render/math?math=\gamma \epsilon [0, 1]"> is the discount factor. The reward associated with a hospital state is <img src="https://render.githubusercontent.com/render/math?math=1 - total penalties"> incurred. The first term in the equation, <img src="https://render.githubusercontent.com/render/math?math=R_{1}">, is the immediate reward associated with the current allocation i.e., the greedy allocation score, and the subsequent terms are rewards associated with future states, where the discount factor weighs the relative importance of these future states against the current state. 
+
+<img align="center" src="https://render.githubusercontent.com/render/math?math=R = R_{1} + \gamma R_{2} +\gamma^{2}R_{3} ... +\gamma^{N}R_{N}">
 
 In this walkthrough we demonstrate how to run the MCTS allocation algorithm in the virtual hospital; see [`src/agent/mcts`](mcts/) and [`src/agent/simulation`](simulation) for the relevant code.
 
@@ -214,14 +211,12 @@ Below we describe the four stages of the MCTS algorithm as they are specifically
 <ol>
 <li><b>Selection</b></li>
 
-Starting at the root node a child node is selected. The root node represents the current state of the hospital at time $t=0$ where the state is defined by the patients that are currently occupying beds and the set of empty beds. 
+Starting at the root node a child node is selected. The root node represents the current state of the hospital at time <img src="https://render.githubusercontent.com/render/math?math=t=0"> where the state is defined by the patients that are currently occupying beds and the set of empty beds. 
 
-In the first iteration of the tree search, the algorithm selects the root node and moves to the expansion step. In subsequent iterations it will traverse from the root and choose one of the child nodes according to the tree policy. The <i>tree policy</i> is the UCB score, in which $\overline{R}$ is the mean reward from visiting that node, $N_{pi}$ is the number of times its parent node was visited and $N_{i}$ is the number of times the node itself has been visited. The first term encourages the algorithm to select nodes that have previously resulted in good outcomes, while the second encourages the algorithm to explore options that it hasn’t visited as often.
-$$
-\begin{align}
-UCB = \overline{R} + \sqrt{\frac{2 \log{N_{p}}}{N_{i}}}
-\end{align}
-$$
+In the first iteration of the tree search, the algorithm selects the root node and moves to the expansion step. In subsequent iterations it will traverse from the root and choose one of the child nodes according to the tree policy. The <i>tree policy</i> is the UCB score, in which <img src="https://render.githubusercontent.com/render/math?math=\overline{R}"> is the mean reward from visiting that node, <img src="https://render.githubusercontent.com/render/math?math=N_{pi}"> is the number of times its parent node was visited and <img src="https://render.githubusercontent.com/render/math?math=N_{i}"> is the number of times the node itself has been visited. The first term encourages the algorithm to select nodes that have previously resulted in good outcomes, while the second encourages the algorithm to explore options that it hasn’t visited as often.
+
+<img src="https://render.githubusercontent.com/render/math?math=UCB = \overline{R} + \sqrt{\frac{2 \log{N_{p}}}{N_{i}}}">
+
 <li><b>Expansion</b></li>
 Once a node is selected, a child node is attached to represent each possible decision state for that time step.
 
