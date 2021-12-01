@@ -42,8 +42,8 @@ def gp(
     y: jnp.ndarray = None,
 ):
     """
-    Long term trend captured using a Gaussian Process (GP), inspired by 
-    previous work of Vehtari et al., as summarised in this blog post:
+    Time series model was inspired by the Gaussian Process (GP) and additive 
+    workflow of Vehtari et al., as summarised in this blog post:
     https://avehtari.github.io/casestudies/Birthdays/birthdays.html#Load_and_plot_data
 
     In practice, GPs can be inefficient to calculate, so the Hilbert Space 
