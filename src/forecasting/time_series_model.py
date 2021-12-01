@@ -41,6 +41,17 @@ def gp(
     M: int,
     y: jnp.ndarray = None,
 ):
+    """
+    Long term trend captured using a Gaussian Process (GP), inspired by 
+    previous work of Vehtari et al., as summarised in this blog post:
+    https://avehtari.github.io/casestudies/Birthdays/birthdays.html#Load_and_plot_data
+
+    In practice, GPs can be inefficient to calculate, so the Hilbert Space 
+    approximation based on this numpyro tutorial was used to ensure tractable 
+    runtimes:
+    http://num.pyro.ai/en/latest/examples/hsgp.html
+    """
+
     # Intercept
     intercept = sample("intercept", dist.Normal(2.0, 1))
 
