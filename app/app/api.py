@@ -27,7 +27,7 @@ from hospital.people import Patient, patient_to_dict
 DIRNAME = os.path.dirname(__file__)
 
 # Flag to set if using real vs dummy data
-REAL_DATA = True
+REAL_DATA = False
 
 if REAL_DATA:
 
