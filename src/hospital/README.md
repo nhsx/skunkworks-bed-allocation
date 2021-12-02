@@ -28,7 +28,7 @@ from hospital.people import Patient
 
 ### 1.2 Initialise the hospital
 
-Initialise the hospital object with a name. We can then set up a list of ward definitions, where wards can either be medical or surgial. In addition a list of specialties can be added, as well as ward sex if applicable. Finally, we apply some ward level restrictions. A full set of available ward restrictions are within the [`hospital.restrictions.ward`](restrictions/ward.py) submodule. 
+Initialise the hospital object with a name. We can then set up a list of ward definitions, where wards can either be medical or surgical. In addition a list of specialties can be added, as well as ward sex if applicable. Finally, we apply some ward level restrictions. A full set of available ward restrictions are defined in the [`hospital.restrictions.ward`](restrictions/ward.py) submodule. 
 
 ```python
 # initialise hospital object
@@ -121,7 +121,7 @@ hospital.wards
 
 ### 1.4 Add rooms and beds
 
-Below we create a generator to yield ward names, a dictionary to define the number of beds and siderooms we wish to add to each ward and a helper function that generates the bed bays and siderooms. In this function each side room has a single bed and the remaining beds are split into bed bays with roughly 6 beds each but the user can define whatever configuration they desire. We also apply a `NoMixedSex` room restriction to all the bed bays, additional room level restrictions are available in the [`hospital.restrictions.room`](restrictions/room.py) sub module.
+Below we create a generator to yield ward names, a dictionary to define the number of beds and siderooms we wish to add to each ward and a helper function that generates the bed bays and siderooms. In this function each side room has a single bed and the remaining beds are split into bed bays with roughly 6 beds each but the user can define whatever configuration they desire. We also apply a `NoMixedSex` room restriction to all the bed bays; additional room level restrictions are available in the [`hospital.restrictions.room`](restrictions/room.py) sub module.
 
 ```python
 # Create an iterator of IDs to avoid duplicating names
