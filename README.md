@@ -10,6 +10,8 @@
 
 Bed Allocation was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
 
+![Screenshot of the user interface](docs/UI.png)
+
 ## Intended Use
 
 This proof of concept ([TRL 4](https://en.wikipedia.org/wiki/Technology_readiness_level)) is intended to demonstrate different approaches to forecasting and bed allocation using machine learning. It is not intended for deployment in a clinical or non-clinical setting without further development and compliance with the [UK Medical Device Regulations 2002](https://www.legislation.gov.uk/uksi/2002/618/contents/made) where the product qualifies as a medical device.
@@ -28,20 +30,18 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 ## Overview
 
 This project consists of 4 components:
-<ol>
-<li> Virtual Hospital Environment
-<li> Allocation Agents
-<li> Demand Forecast
-<li> UI
-</ol>
 
-The virtual hospital environment is within the `hospital` submodule (`src/hospital`). Guidance on usage is provided in `1.Virtual_Hospital_Environment.ipynb` notebook. 
+Component|Description|Documentation
+---|---|---
+Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hospital)
+Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints|[`src/agent`](src/agent)
+Demand Forecast|Generates a forecast for bed demand based on historical data|[`src/forecasting`](src/forecasting)
+UI|A web-based frontend built with Plotly Dash that integrates the virtual hospital, allocation and demand forecast components|`app`
 
-The Allocation agents are within the `agent` submodule (`src/agent`). Guidance on usage and full documentation of the method if provided in the notebooks `2.Greedy_Allocation.ipynb` and `3.MCTS_Allocation.ipynb`. 
+Using historical admissions data, the forecast model feeds into the allocation agent (for Monte Carlo Tree Search) and suggests the best available bed for an incoming patient:
 
-The deman forecast components including the Bayesian time series model are within the `forecasting` submodule (`src/forecasting`). However, to comply with IG regulations, the training data and model are not provdided. PDF versions of the forcasting notebooks are provided in `docs/`, along with schema information on the PAS and Patient Flow fields used, for pedagogical purposes. 
+![Overview of how components interact](docs/overview.png)
 
-The UI component is built with Plotly Dash and designed to work with synthetic data.
 
 ## Getting Started
 
