@@ -241,7 +241,7 @@ print(f"Total penalty: {total_penalty}")
 print(f"Broken restrictions: {broken_restrictions}")
 ```
 
-This allocation results in a penalty of 10 because the `NeedsSideRoom` restriction is violated. We can discharge this patient from this specific bed and try a new bed. This time we admit them to a side room, and can see that that restriction is no longer broken.
+This allocation results in a penalty of 10 because the `NeedsSideRoom` restriction is violated. We can discharge this patient from this specific bed and try a new bed. This time we admit them to a side room, and can see that the restriction is no longer broken.
 
 ```python
 hospital.discharge(patient) # alternatively try hospital.clear() to discharge all patients
