@@ -1,0 +1,85 @@
+{
+    "SEX_DESC": [
+        "MALE",
+        "FEMALE"
+    ],
+    "COVID Positive": [
+        0,
+        1
+    ],
+    "COVID Re-Swab": [
+        0,
+        1
+    ],
+    "Dementia": [
+        0,
+        1
+    ],
+    "End Of Life": [
+        0,
+        1
+    ],
+    "Exposed to COVID": [
+        0,
+        1
+    ],
+    "Falls": [
+        0,
+        1
+    ],
+    "Visual Impairment": [
+        0,
+        1
+    ],
+    "Visual Supervision": [
+        0,
+        1
+    ],
+    "ELECTIVE": [
+        0,
+        1
+    ],
+    "ADMIT_DIV": [
+        "Test1",
+        "Test2"
+    ],
+    "ADMIT_SPEC": [
+        "Test1",
+        "Test2"
+    ],
+    "ADMIT_DAY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "ADMIT_HOUR": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+    ]
+}

@@ -1,0 +1,168 @@
+{
+    "fields": [
+        {
+            "DIM_PATIENT_ID": [
+                {
+                    "name": "DIM_PATIENT_ID",
+                    "description": "Unique patient ID",
+                    "source": "PAS - Patient Dimension and PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "-"
+                }
+            ],
+            "SEX_DESC": [
+                {
+                    "name": "SEX_DESC",
+                    "description": "Sex of patient",
+                    "source": "PAS - Patient Dimension",
+                    "type": "object",
+                    "Entry options": "Male, Female"
+                }
+            ],
+            "AGE": [
+                {
+                    "name": "AGE",
+                    "description": "Age of patient",
+                    "source": "Calculated using ADMIT_DTTM in PAS - Inpatient Spells and BIRTH_YEAR in PAS - Patient Dimension",
+                    "type": "int64",
+                    "Entry options": "0-100+"
+                }
+            ],
+            "COVID Positive": [
+                {
+                    "name": "COVID Positive",
+                    "description": "Whether patient is COVID positive",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "COVID Re-Swab": [
+                {
+                    "name": "COVID Re-Swab",
+                    "description": "Whether patient is awaiting a re-swab for COVID",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "Dementia": [
+                {
+                    "name": "Dementia",
+                    "description": "Whether patient has dementia",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "End Of Life": [
+                {
+                    "name": "End Of Life",
+                    "description": "Whether patient is on an end of life pathway",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "Exposed to COVID": [
+                {
+                    "name": "Exposed to COVID",
+                    "description": "Whether patient has been exposed to COVID",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "Falls": [
+                {
+                    "name": "Falls",
+                    "description": "Whether patient is a falls risk",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "Visual Impairment": [
+                {
+                    "name": "Visual Impairment",
+                    "description": "Whether patient is visually impaired",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "Visual Supervision": [
+                {
+                    "name": "Visual Supervision",
+                    "description": "Whether patient needs to be visually supervised",
+                    "source": "Patient Flow - Multi Icon Option and Patient Flow - Multi Icon Option Definition lookup",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "ELECTIVE": [
+                {
+                    "name": "ELECTIVE",
+                    "description": "Whether the patient is being admitted for an elective procedure",
+                    "source": "Calculated using DTA_DTTM (only used for elective patients) in PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "0, 1"
+                }
+            ],
+            "ADMIT_DIV": [
+                {
+                    "name": "ADMIT_DIV",
+                    "description": "Which division the patient is admitted to",
+                    "source": "Mapped from DIM_ADM_SPECT_ID in PAS - Inpatient Spells and Specialty lookup table",
+                    "type": "object",
+                    "Entry options": "Medicine, Surgery"
+                }
+            ],
+            "ADMIT_SPEC": [
+                {
+                    "name": "ADMIT_SPEC",
+                    "description": "Which specialty the patient is admitted to",
+                    "source": "Mapped from DIM_ADM_SPECT_ID in PAS - Inpatient Spells and Specialty lookup table",
+                    "type": "object",
+                    "Entry options": "Cardiology, Urology, General, etc."
+                }
+            ],
+            "ADMIT_DTTM": [
+                {
+                    "name": "ADMIT_DTTM",
+                    "description": "The date and time of the patient admission",
+                    "source": "PAS - Inpatient Spells",
+                    "type": "datetime64[ns]",
+                    "Entry options": "e.g. 05/06/2019 15:43"
+                }
+            ],
+            "ADMIT_DAY": [
+                {
+                    "name": "ADMIT_DAY",
+                    "description": "The day of the patient admission",
+                    "source": "Calculated from ADMIT_DTTM in PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "0-6"
+                }
+            ],
+            "ADMIT_HOUR": [
+                {
+                    "name": "ADMIT_DAY",
+                    "description": "The day of the patient admission",
+                    "source": "Calculated from ADMIT_DTTM in PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "0-6"
+                }
+            ],
+            "LOS_HOURS": [
+                {
+                    "name": "LOS_HOURS",
+                    "description": "The length of stay in hours of the patient",
+                    "source": "Calculated from ADMIT_DTTM and DISCH_DTTM in PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "1-1000+"
+                }
+            ]
+        }
+    ]
+}
