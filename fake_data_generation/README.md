@@ -23,7 +23,7 @@ Note a number of the fields will show only test categories and may not be reflec
 Everything needed to generate fake data using `forecast_generate_fake_data.py` is contained in the file and does not need any additional files to run.
 
 ### How to run
-Before running ensure your environment is set up as described in: [README.md](README.md) 
+Before running ensure your environment is set up as described in: [README.md](../README.md) 
 
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
 
@@ -69,7 +69,7 @@ Data fields that do not have their categories specified in [patient_fake_data_ca
 
 
 ### How to run
-Before running ensure your environment is set up as described in: [README.md](README.md) 
+Before running ensure your environment is set up as described in: [README.md](../README.md).
 
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
 

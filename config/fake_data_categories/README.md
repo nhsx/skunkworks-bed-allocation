@@ -1,7 +1,5 @@
-NEED TO COMPLETE
+# Fake data categories
 
-To run:
-`python patient_generate_fake_data.py -nr 200`
+This directory contains the file `patient_fake_data_categories.json` which provides the fake data categories for `fake_data_generation\patient_generate_fake_data.py`.
 
-
-`python forecast_generate_fake_data.py -nr 200 -fn "fake1"`
+For more details on the fake data generator and how to run the fake generation files please see: [README.md](../../fake_data_generation/README.md)
