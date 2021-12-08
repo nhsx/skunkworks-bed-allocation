@@ -29,6 +29,8 @@ This project was subject to a Data Protection Impact Assessment (DPIA), ensuring
 
 ## Overview
 
+> The full [technical report (PDF)](docs/NHS_AI_Lab_Skunkworks_Bed_Allocation_Technical_Report.pdf) is available to download.
+
 This project consists of 4 components:
 
 Component|Description|Documentation
