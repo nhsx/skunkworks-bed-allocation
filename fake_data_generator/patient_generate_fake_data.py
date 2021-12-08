@@ -85,7 +85,7 @@ df["ADMIT_DTTM"] = pd.Timestamp(year=1855, month=1, day=1, hour=12)
 
 
 # Write dataframe to csv
-df.to_csv(f"{args.filename}.csv", index=False)
+df.to_csv(f"{args.filename}.csv")
 
 # Message to show script has run
 print(

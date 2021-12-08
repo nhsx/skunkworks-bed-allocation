@@ -65,7 +65,7 @@ df["ADMIT_DTTM"] = pd.date_range(
 df["Total"] = np.random.randint(30, 60, size=(args.number_of_records))
 
 # Write dataframe to csv
-df.to_csv(f"{args.filename}.csv", index=False)
+df.to_csv(f"{args.filename}.csv")
 
 # Message to show script has run
 print(
