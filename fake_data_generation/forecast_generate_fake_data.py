@@ -7,7 +7,6 @@ Instructions on how to run this file can be found in the README.md in this direc
 """
 
 import argparse
-import json
 import numpy as np
 import pandas as pd
 import random
@@ -15,7 +14,7 @@ import random
 # Get arguments from command line
 # (If args are not specified default values will be used.)
 parser = argparse.ArgumentParser(
-    description="""The purpose of `generate_fake_data.py` is to create a `.csv` file with fake data with the following intended applications: 
+    description="""The purpose of `forecast_generate_fake_data.py` is to create a `.csv` file with fake data with the following intended applications: 
     An example of how data needs to be formatted to be passed into the model and to test the setup and running of the repo."""
 )
 
@@ -31,9 +30,9 @@ parser.add_argument(
     "--filename",
     "-fn",
     type=str,
-    default="fake_data",
+    default="forecast_fake_data",
     help="""[str] The name of the csv file saved at the end (do not add.csv).
-    The default name is set to "fake_data". This will generate a file called "fake_data.csv" . """,
+    The default name is set to "forecast_fake_data". This will generate a file called "forecast_fake_data.csv" . """,
 )
 
 parser.add_argument(
@@ -51,7 +50,6 @@ args = parser.parse_args()
 if args.seed is not None:
     np.random.seed(seed=args.seed)
 
-
 # Create dataframe with original data fields
 df = pd.DataFrame(columns=["ADMIT_DTTM", "Total"])
 
@@ -63,6 +61,7 @@ df["ADMIT_DTTM"] = pd.date_range(
 )
 
 df["Total"] = np.random.randint(30, 60, size=(args.number_of_records))
+
 
 # Write dataframe to csv
 df.to_csv(f"{args.filename}.csv")

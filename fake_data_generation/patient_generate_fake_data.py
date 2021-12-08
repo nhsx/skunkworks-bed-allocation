@@ -15,7 +15,7 @@ import random
 # Get arguments from command line
 # (If args are not specified default values will be used.)
 parser = argparse.ArgumentParser(
-    description="""The purpose of `generate_fake_data.py` is to create a `.csv` file with fake data with the following intended applications: 
+    description="""The purpose of `patient_generate_fake_data.py` is to create a `.csv` file with fake data with the following intended applications: 
     An example of how data needs to be formatted to be passed into the model and to test the setup and running of the repo."""
 )
 
@@ -31,9 +31,9 @@ parser.add_argument(
     "--filename",
     "-fn",
     type=str,
-    default="fake_data",
+    default="patient_fake_data",
     help="""[str] The name of the csv file saved at the end (do not add.csv).
-    The default name is set to "fake_data". This will generate a file called "fake_data.csv" . """,
+    The default name is set to "patient_fake_data". This will generate a file called "patient_fake_data.csv" . """,
 )
 
 parser.add_argument(
@@ -73,7 +73,6 @@ for column in columns:
         )
 
 # Remaining fields to fill in so they are not null
-# fields requiring int:
 df["DIM_PATIENT_ID"] = np.random.randint(
     1000, 4000, size=(args.number_of_records)
 )
