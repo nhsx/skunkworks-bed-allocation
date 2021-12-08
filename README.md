@@ -8,7 +8,7 @@
 
 > A pilot project for the NHS AI (Artificial Intelligence) Lab Skunkworks team, Bed Allocation aims to explore whether machine learning can effectively aid bed management in Kettering General Hospital.
 
-Bed Allocation was selected as a project in {DATE SELECTED} following a succesful pitch to the AI Skunkworks problem-sourcing programme.
+Bed allocation was identified as a suitable opportunity for the AI Skunkworks programme in May 2021.
 
 ![Screenshot of the user interface](docs/UI.png)
 
