@@ -47,6 +47,40 @@ Using historical admissions data, the forecast model feeds into the allocation a
 
 ## Getting Started
 
+### Data requirements
+
+There are two modes this project can be run in:
+
+1. Using historic data
+2. Using dummy data (sine wave of demand)
+
+The mode is set in [app/app/api.py](app/app/api.py#L30):
+
+```python
+# Flag to set if using real vs dummy data
+REAL_DATA = False
+```
+
+Depending on the mode, different data artefacts are required:
+
+Artefact|Location|Description|Generator|Data required|Historic Data Mode|Dummy Data Mode
+---|---|---|---|---|---|---
+`hospital.pkl`|`data/`|Contains virtual hospital with ward configuration|`notebooks/1.Virtual_Hospital_Environment.ipynb`|Hard coded|Required|Required
+`forecast_split_random.pkl`|`app/app/data/`|Contains the split in attributes, e.g. number of male vs female patients|`app/app/data/get_forecast_split.py`|`patient_df.csv`|Required|Required
+`forecast_results.pkl`|`data/`|Bayesian time series model based on historic admissions data|`notebooks/4.Time_Series_Forecast.ipynb`|`historic_admissions.csv`|Required|
+`forecast_percentiles.pkl`||Forecast percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
+`forecast_aggregated_percentiles.pkl`||Aggregate percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
+
+Data|Location|Description|Definition|Generator
+---|---|---|---|---
+`historic_admissions.csv`|`src/forecasting/data/`|Date and time of historic admissions, aggregated to every hour|`data/historic_admissions_csv_format.csv`|`fake_data_generation/forecast_generate_fake_data.py`
+`patient_df.csv`|`app/data/`|Contains patient-level admissions data|`data/patient_df_csv_format.csv`|`fake_data_generation/patient_generate_fake_data.py`
+`wards.csv`|`data/`|?|
+`specialty_info.json`|`src/forecasting/`|?|
+`hourly_elective_prob.json`|`src/forecasting/`|?|
+
+### Installation
+
 This project requires Python 3, If your system is running an older version
 of Python we recommend creating a conda environment with Python 3.9 to install
 the package.
