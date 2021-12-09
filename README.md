@@ -68,8 +68,8 @@ Artefact|Location|Description|Generator|Data required|Historic Data Mode|Dummy D
 `hospital.pkl`|`data/`|Contains virtual hospital with ward configuration|`notebooks/1.Virtual_Hospital_Environment.ipynb`|Hard coded|Required|Required
 `forecast_split_random.pkl`|`app/app/data/`|Contains the split in attributes, e.g. number of male vs female patients|`app/app/data/get_forecast_split.py`|`patient_df.csv`|Required|Required
 `forecast_results.pkl`|`data/`|Bayesian time series model based on historic admissions data|`notebooks/4.Time_Series_Forecast.ipynb`|`historic_admissions.csv`|Required|
-`forecast_percentiles.pkl`||Forecast percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
-`forecast_aggregated_percentiles.pkl`||Aggregate percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
+`forecast_percentiles.pkl`|`app/app/data/`|Forecast percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
+`forecast_aggregated_percentiles.pkl`|`app/app/data/`|Aggregate percentiles from full posterior for the next 4 hours|`app/app/data/get_forecast_percentiles.py`|`forecast_results.pkl`|Required|
 
 Data|Location|Description|Definition|Generator
 ---|---|---|---|---
