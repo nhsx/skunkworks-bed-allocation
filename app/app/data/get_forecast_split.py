@@ -54,7 +54,7 @@ def main():
         sampler = PatientSampler(day, hour, historic=False)
         # Samples patients according to forecast with filters off as want to
         # proportion of elective, etc. patients rather than filtering
-        samples = sampler.sample_historic(
+        samples = sampler.sample_patients(
             hours_ahead, num_samples, filtered=False
         )
 
