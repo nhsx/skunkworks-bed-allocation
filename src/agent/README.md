@@ -114,31 +114,41 @@ This walkthrough is also available as a [notebook](../../notebooks/3.MCTS_Alloca
 import cloudpickle
 import copy
 import time
+import random
 
 import warnings
 warnings.filterwarnings('ignore')
+
+from tqdm.notebook import tqdm
 
 import agent.utils as utils
 import agent.policy as policy
 import agent.run_mcts as mcts
 from hospital.people import Patient
-from forecasting.patient_sampler import PatientSampler
+from hospital.building import Hospital, MedicalWard, SurgicalWard, Room
+from hospital.equipment.bed import Bed
+import hospital.restrictions.ward as R
 ```
 
-### 2.2 Load the Hospital Environment
+### 2.2 Create the Hospital Environment
 
-We load the saved hospital environment and initialise it with a random set of patients at an occupancy of 90% and normalise the restriction penalties to lie between 0-1.
+The MCTS implementation can take a long time to run, and have high memory requirements. To demonstrate how it can be run we create a simplified scenario with a hospital containing 2 wards (1 medical, 1 surgical), and 5 beds each. The Medical ward will have a restriction for not allowing surgical patients and vice versa. 
 
 ```python
-with open("../data/hospital.pkl", "rb") as f:
-        h = cloudpickle.load(f)
-        
-policy.populate_hospital(h, occupancy=0.90)
+beds = [Bed(name=f"B00{i}") for i in range(10)]
+wards = [
+    MedicalWard(name="MedicalWard", rooms=[Room(name="R000", beds=beds[:5])]),
+    SurgicalWard(name="SurgicalWard", rooms=[Room(name="R001", beds=beds[5:])]),
+]
+h = Hospital(name="Hospital", wards=wards)
+
+# Add ward restrictions
+h.wards[0].restrictions = [R.NoSurgical(10)]
+h.wards[1].restrictions = [R.NoMedical(5)]
+
+# Populate at 50%
+policy.populate_hospital(h, occupancy=0.5)
 h.render()
-```
-
-```python
-len(list(h.get_empty_beds()))
 ```
 
 ```python
@@ -148,42 +158,83 @@ utils.normalise_ward_penalties(h)
 
 ### 2.3 Create patients to admit to the hospital
 
-We first create the Patient we currently want to allocate like we did earlier. Then we use the patient sampler to generate the arrivals forecast used to simulate the future within the MCTS. 
+To generate realistic patients utilise the PatientSampler class which takes a day of week and an hour of the day and returns a forecast for the number of patients estimated to arrive each hour, `N`. By default, the patients are synthesied with random data where the distribution for each attributes is informed by aggregated historic data. If historic patient data is available then a pool of historic patients can be saved and setting `historic=True` will return more accurate marginal distributions accross all patient attributes. Otherwise, the returned number of patients `N` is a random number, and the returned patient attributes are randomly generated. See [`src/forecasting/patient_sampler`](src/forecasting/patient_sampler.py). 
 
-We use the PatientSampler class to provide a list of incoming patients as below. The sampler takes a day of week and an hour of the day and returns a forecast for the number of patients estimated to arrive each hour, `N`. By default, the patients are synthesied with random data where the distribution for each attributes is informed by aggregated historic data. If historic patient data is available then a pool of historic patients can be saved and setting `historic=True` will return more accurate marginal distributions accross all patient attributes. The function call and outputs are otherwise the same, but at the moment the returned number of patients `N` is a random number, and the returned patients are randomly generated. See [`src/forecasting/patient_sampler`](../forecasting/patient_sampler). 
-
-```python
-patient = Patient(
-    name="patient",
-    sex="female",
-    department="medicine",
-    specialty="general",
-    is_known_covid=True,
-)
 ```
-
-```python
 sampler = PatientSampler("monday", 9)
-forcast_window=2
-forecasted_patients = sampler.sample_patients(forecast_window=forcast_window, num_samples=1)
+forecast_window=2
+forecasted_patients = sampler.sample_patients(forecast_window=forecast_window, num_samples=1)
 
 # we can unpack the above structure into a list of lists
 # each sublist represents an hour of patients
 arrivals = []
 for _, patients in forecasted_patients[0].items():
-    arrivals.append(patients)
-    
-print(f"Incoming patients per hour: {[len(l) for l in arrivals]}")
+     arrivals.append(patients)
 ```
 
-now we insert the patient we are currently trying to allocate as the first patient, as time t=1.
+We will instead use the code below to create a simplified list of arriving patients, by initialising patients with the default value for most fields, such that there won't be any additional patient level restrictions (e.g., patient needs side room for immunosuppression). The arrivals list will still have the same structure as above. 
 
 ```python
+def generate_random_name() -> str:
+    """
+    2 random letters + 2 random numbers. As a string.
+    """
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    digits = "0123456789"
+    characters = random.choices(letters, k=2) + random.choices(digits, k=2)
+    name = "".join(characters)
+    return name
+
+def generate_simple_patient() -> Patient:
+    """Returns a random patient, without any patient level restrictions."""
+    
+    # department and specialty
+    department = ["medicine", "surgery"][utils.bernoulli(0.5)]
+
+    # Patient, all other attributes are default=False
+    patient = Patient(
+        name=generate_random_name(),
+        sex=["male", "female"][utils.bernoulli(0.5)],
+        department=department
+    )
+    
+    return patient
+
+def generate_arrivals(max_per_hour: int, forecast_window: int) -> list:
+    """Creates a list of arriving patients for each hour of in the forecast window"""
+    arrivals =[]
+    for hours in range(forecast_window):
+        arrivals.append([generate_simple_patient() for _ in range(random.randint(0, max_per_hour))])
+                        
+    return arrivals
+```    
+
+```python
+# patient currently being allocated
+patient = Patient(
+    name="patient_0",
+    sex="female",
+    department="medicine",
+)
+
+# 'forecasted' arrivals
+arrivals = generate_arrivals(3, 4)
+
+print(f"Incoming patients per hour: {[len(l) for l in arrivals]}")
+
+# now we insert the patient we are currently trying to 
+# allocate as the first patient, as time t=1.
 arrivals = [[patient]] + arrivals
-arrivals
 ```
 
-**WARNING: This following code may take a long time or cause memory issues if a lot of patients (>4) are arriving in a single time step or the forecast window is large (>2)**
+Now we can run the MCTS as below. The output in `mcts_output` is a list of dictionaries where each dictionary represents a possible allocation for patient_0, and the results of the tree search for that option, further details of the tree search are provided below. The items of each dictionary are:
+- `action`, the allocation of the current patient into a bed. It is possible to consider allocating multiple patients in a timestep, as such, the action is represented by a dictionary of bed_name:patient pairs, for each patient at t=0 in the tree search. In our example there is just one patient.
+- `score`, the immediate pentaly associated with allocating the current patient(s) to the suggested bed(s).
+- `violated_restrictions`, the set of restrictions (if any), violated by assigning the patient(s) to the suggested bed(s).
+- `ucb_score`, the tree policy score associated with the suggested allocation. See below for more details on UCB score. 
+- `visit_count`, the number of times the node representing the suggested allocation was visited during tree search. 
+
+There are several potential strategies for determining what the best allocation option is. The one with the lowest `score` is equivalent to making a greedy optimisation that selects the best bed given the current circumstances of the hospital; whereas, making a choice between the highest `ucb_score`, or `visit_count` or a weighted average of both provides the best allocation according to the MCTS. 
 
 ```python
 h_copy = copy.deepcopy(h)
@@ -192,7 +243,7 @@ mcts_node = mcts.run_mcts(
         h_copy,
         arrivals,
         discount_factor=0.9,
-        n_iterations=10,
+        n_iterations=100,
 )
 elapsed = time.time() - t
 mcts_output = mcts.construct_mcts_output(h_copy, mcts_node, patient)
