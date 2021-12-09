@@ -73,7 +73,7 @@ Artefact|Location|Description|Generator|Data required|Historic Data Mode|Dummy D
 
 Data|Location|Description|Definition|Generator
 ---|---|---|---|---
-`historic_admissions.csv`|`src/forecasting/data/`|Date and time of historic admissions, aggregated to every hour|`data/historic_admissions_csv_format.csv`|`fake_data_generation/forecast_generate_fake_data.py`
+`historic_admissions.csv`|`src/forecasting/data/`,`data/`|Date and time of historic admissions, aggregated to every hour|`data/historic_admissions_csv_format.csv`|`fake_data_generation/forecast_generate_fake_data.py`
 `patient_df.csv`|`app/data/`|Contains patient-level admissions data|`data/patient_df_csv_format.csv`|`fake_data_generation/patient_generate_fake_data.py`
 `wards.csv`|`data/`|?|
 `specialty_info.json`|`src/forecasting/`|?|
