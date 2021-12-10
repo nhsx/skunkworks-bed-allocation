@@ -1,4 +1,5 @@
 import os
+import pickle
 from typing import Any, Dict, List, Tuple, Union
 
 import cloudpickle
@@ -13,6 +14,11 @@ from forecasting.patient_sampler import (
     generate_random_patients,
     pandas_to_patients,
 )
+from forecasting.utils import (
+    map_to_date,
+    split_historic_forecast,
+    split_training,
+)
 from hospital.building.building import Hospital
 from hospital.building.room import BedBay, SideRoom
 from hospital.building.ward import Ward
@@ -20,11 +26,35 @@ from hospital.people import Patient, patient_to_dict
 
 DIRNAME = os.path.dirname(__file__)
 
+# Flag to set if using real vs dummy data
+REAL_DATA = False
+
+if REAL_DATA:
+
+    try:
+        PERCENTILES = pickle.load(
+            open(os.path.join(DIRNAME, "data/forecast_percentiles.pkl"), "rb")
+        )
+    except FileNotFoundError as e:
+        print("Forecast data not found, see "
+            "app/app/data/get_forecast_percentiles.py")
+        raise e
+
+    try:
+        ADMISSIONS = pd.read_csv(
+            os.path.join(DIRNAME, "../../data/historic_admissions.csv"),
+            index_col=0,
+        )
+    except FileNotFoundError as e:
+        print("Training data not found")
+        raise e
+
 try:
     WARDS = pd.read_csv(os.path.join(DIRNAME, "data/wards.csv"), index_col=0)
 except FileNotFoundError as e:
     print("Ward file not found")
     raise e
+
 
 FIELD_MAP = {
     "name": "Name",
@@ -300,21 +330,57 @@ def calc_occupancy(ward: Ward) -> int:
 
 
 def get_forecast(day: str, time: int) -> List[np.ndarray]:
-    """Dummy function to get forecast"""
-    before = np.linspace(2 * np.pi * -7, 0, 7 * 24)
-    after = np.linspace(0, 2 * np.pi * 3, 3 * 24)
-    n_patients_before = np.sin(before) + np.random.uniform(1, 0.3, 7 * 24)
-    n_patients_after = np.sin(after) + np.random.uniform(1, 0.3, 3 * 24)
+    """
+    If real data is being used, reads it in, otherwise generates synthetic. 
+    Then saves to JSON format.
+    """
+
+    if REAL_DATA:
+
+        # Finds date within forecast window for that day of week and hour of
+        # day
+        date = map_to_date(day, time)
+
+        times = PERCENTILES["time"]
+        percentiles = PERCENTILES["percentiles"]
+
+        # Want to plot 4 days back and 12 hrs forwards
+        historic_hours = 96
+        forecast_hours = 12
+        historic_ids, forecast_ids = split_historic_forecast(
+            times, date, historic_hours + 1, forecast_hours + 1
+        )
+
+        # Cuts forecast down to correct length
+        historic_times = times[historic_ids + 1].strftime("%d/%m/%Y %H:%M")
+        forecast_times = times[forecast_ids].strftime("%d/%m/%Y %H:%M")
+        historic_data = percentiles[:, historic_ids + 1]
+        forecast_data = percentiles[:, forecast_ids]
+
+    else:
+
+        # Generates synthetic data
+        historic_times = np.linspace(2 * np.pi * -7, 0, 7 * 24)
+        forecast_times = np.linspace(0, 2 * np.pi * 3, 3 * 24)
+        historic_data = np.sin(historic_times) + np.random.uniform(
+            1, 0.3, 7 * 24
+        )
+        forecast_data = np.sin(forecast_times) + np.random.uniform(
+            1, 0.3, 3 * 24
+        )
+
+    # Saves as a JSON
     forecast_json = {
         "historic": {
-            "time": before.tolist(),
-            "n_patients": n_patients_before.tolist(),
+            "time": historic_times.tolist(),
+            "n_patients": historic_data.tolist(),
         },
         "forecast": {
-            "time": after.tolist(),
-            "n_patients": n_patients_after.tolist(),
+            "time": forecast_times.tolist(),
+            "n_patients": forecast_data.tolist(),
         },
     }
+
     return forecast_json
 
 
@@ -322,22 +388,135 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
     """
     Creates the figure showing the forecasted number of patients
     """
-    data = [
-        go.Scatter(
-            x=forecast[period]["time"],
-            y=forecast[period]["n_patients"],
-            mode="lines+markers",
-            marker={"size": 8},
-            name=period,
+
+    if REAL_DATA:
+
+        # Changing times back to timestamps
+        forecast["historic"]["time"] = pd.to_datetime(
+            forecast["historic"]["time"]
         )
-        for period in ["historic", "forecast"]
-    ]
-    layout = {
-        "xaxis": {"title": "time"},
-        "yaxis": {"title": "Number of patients"},
-        "legend": {"yanchor": "top", "y": 0.99, "xanchor": "left", "x": 0.01},
-        "margin": {"t": 20, "b": 10, "l": 20, "r": 20},
-        "height": 250,
-    }
+        forecast["forecast"]["time"] = pd.to_datetime(
+            forecast["forecast"]["time"]
+        )
+
+        # Cutting training data to just dates 4 days before forecast
+        training_hours = 96
+        training_ids = split_training(
+            pd.to_datetime(ADMISSIONS["ADMIT_DTTM"].values),
+            max(forecast["historic"]["time"]),
+            training_hours,
+        )
+        training = ADMISSIONS.iloc[training_ids]
+        training_time = training["ADMIT_DTTM"]
+        training_data = training["Total"]
+
+        data = []
+        for period in ["forecast", "historic"]:
+            # 5th percentile
+            data.append(
+                go.Scatter(
+                    x=forecast[period]["time"],
+                    y=forecast[period]["n_patients"][0],
+                    mode="lines",
+                    line_color="grey",
+                    showlegend=False,
+                    hoverinfo="skip",
+                )
+            )
+            # 95th percentile and fill
+            data.append(
+                go.Scatter(
+                    x=forecast[period]["time"],
+                    y=forecast[period]["n_patients"][2],
+                    mode="lines",
+                    line_color="grey",
+                    fill="tonexty",
+                    fillcolor="grey",
+                    showlegend=False,
+                    hoverinfo="skip",
+                )
+            )
+        # Median for forward forecast
+        data.append(
+            go.Scatter(
+                x=forecast["forecast"]["time"],
+                y=forecast["forecast"]["n_patients"][1],
+                mode="lines",
+                line_color="black",
+                marker={"size": 8},
+                name="Forecast",
+            )
+        )
+        # Past admisions data
+        data.append(
+            go.Scatter(
+                x=training_time,
+                y=training_data,
+                mode="markers",
+                line_color="black",
+                marker={"size": 8},
+                name="Historic",
+            )
+        )
+        # Vertical dashed line
+        data.append(
+            go.Scatter(
+                x=[
+                    forecast["forecast"]["time"][0],
+                    forecast["forecast"]["time"][0],
+                ],
+                y=[-5, 50],
+                mode="lines",
+                line={"dash": "dash", "color": "black"},
+                showlegend=False,
+                hoverinfo="skip",
+            )
+        )
+        # Determines axis labels, legend, etc.
+        layout = {
+            "xaxis": {
+                "title": "Date",
+                "range": [
+                    min(forecast["historic"]["time"]),
+                    max(forecast["forecast"]["time"]),
+                ],
+            },
+            "yaxis": {"title": "Admissions per hour", "range": [-2, 42],},
+            "legend": {
+                "yanchor": "top",
+                "y": 0.99,
+                "xanchor": "left",
+                "x": 0.01,
+            },
+            "margin": {"t": 20, "b": 10, "l": 20, "r": 20},
+            "height": 250,
+        }
+
+    else:
+
+        # Plots synthetic data
+        data = [
+            go.Scatter(
+                x=forecast[period]["time"],
+                y=forecast[period]["n_patients"],
+                mode="lines+markers",
+                marker={"size": 8},
+                name=period,
+            )
+            for period in ["historic", "forecast"]
+        ]
+        # Determines axis labels, legend, etc.
+        layout = {
+            "xaxis": {"title": "time"},
+            "yaxis": {"title": "Number of patients"},
+            "legend": {
+                "yanchor": "top",
+                "y": 0.99,
+                "xanchor": "left",
+                "x": 0.01,
+            },
+            "margin": {"t": 20, "b": 10, "l": 20, "r": 20},
+            "height": 250,
+        }
 
     return go.Figure(data=data, layout=layout)
