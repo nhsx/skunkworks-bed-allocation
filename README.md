@@ -62,7 +62,12 @@ To install in dev mode with the [Pytest](https://docs.pytest.org/en/6.2.x/) test
 
 The user interface integrates the greedy allocation approach, which is independent of the time series forecast, as well as a visual forecast of upcoming patients.
 
-The visual forecast has two operating modes, specified in https://github.com/nhsx/pre-publication-skunkworks-bed-allocation/blob/6520c69ab2611b4fdf6252e12f79b1a74c972baa/app/app/api.py#L30:
+The visual forecast has two operating modes, specified in [`app/app/api.py`](app/app/api.py#L30):
+
+```python
+# Flag to set if using real vs dummy data
+REAL_DATA = False
+```
 
 1. Dummy forecast data (default, a sine wave)
 2. Historic forecast data
@@ -81,11 +86,11 @@ Run `python app/app/data/get_forecast_split.py`
 
 > Note that this script currently takes ~2 hours to generate the required pickle file
 
-This will create the `forecast_split_random.pkl` file in `app/app/data/`.
+This will create the `forecast_split_random.pkl` file in `app/app/data/`, based on the attributes defined in [`generate_random_patients.py`](src/forecasting/generate_random_patients.py#L246).
 
 ### Launching the user interface
 
-To launch the UI run `python app/run.py`.
+With the required artefacts in place, to launch the UI run `python app/run.py`.
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
