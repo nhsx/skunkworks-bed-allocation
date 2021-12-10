@@ -86,7 +86,7 @@ Run `python app/app/data/get_forecast_split.py`
 
 > Note that this script currently takes ~2 hours to generate the required pickle file
 
-This will create the `forecast_split_random.pkl` file in `app/app/data/`, based on the attributes defined in [`generate_random_patients.py`](src/forecasting/generate_random_patients.py#L246).
+This will create the `forecast_split_random.pkl` file in `app/app/data/`, based on the attributes defined in [`patient_sampler.py`](src/forecasting/patient_sampler.py#L246).
 
 ### Launching the user interface
 
