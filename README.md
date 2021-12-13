@@ -53,16 +53,48 @@ Using historical admissions data, the forecast model feeds into the allocation a
 
 ## Getting Started
 
-This project requires Python 3, If your system is running an older version
-of Python we recommend creating a conda environment with Python 3.9 to install
-the package.
+This project requires Python 3.9+.
 
-For standard installation run `pip install .` from within the repo.
+### Installation
 
-To install in dev mode with the [Pytest](https://docs.pytest.org/en/6.2.x/) testing suite available run
+1. Create a virtual environment using e.g. [venv](https://docs.python.org/3/library/venv.html)
+2. For standard installation run `pip install .` from within the repo.
+3. To install in development mode with the [Pytest](https://docs.pytest.org/en/6.2.x/) testing suite available run
 ```pip install -e ."[testing]"```.
 
-To launch the UI run `python app/run.py`.
+### Generating required data artefacts
+
+The user interface integrates the greedy allocation approach, which is independent of the time series forecast, as well as a visual forecast of upcoming patients.
+
+The visual forecast has two operating modes, specified in [`app/app/api.py`](app/app/api.py#L30):
+
+```python
+# Flag to set if using real vs dummy data
+REAL_DATA = False
+```
+
+1. Dummy forecast data (default, a sine wave)
+2. Historic forecast data
+
+To operate the tool in dummy mode you will need to create the minumum required data artefacts:
+
+#### 1. Create a virtual hospital
+
+From your virtual environment, follow the instructions in the [Virtual Hospital Notebook](notebooks/1.Virtual_Hospital_Environment.ipynb), which will create and store the `hospital.pkl` file in `data/`.
+
+#### 2. Create a forecast split of patient attributes
+
+The forecast is applied to a random split of patient attributes, which can be generated from your virtual environment by:
+
+Run `python app/app/data/get_forecast_split.py`
+
+> Note that this script currently takes ~2 hours to generate the required pickle file
+
+This will create the `forecast_split_random.pkl` file in `app/app/data/`, based on the attributes defined in [`patient_sampler.py`](src/forecasting/patient_sampler.py#L246).
+
+### Launching the user interface
+
+With the required artefacts in place, to launch the UI from your virtual environment, run `python app/run.py` which will listen on port 8888.
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
