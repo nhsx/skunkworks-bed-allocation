@@ -87,7 +87,7 @@ This will create the `forecast_split_random.pkl` file in `app/app/data/`, based 
 
 ### Launching the user interface
 
-With the required artefacts in place, to launch the UI from your virtual environment, run `python app/run.py`.
+With the required artefacts in place, to launch the UI from your virtual environment, run `python app/run.py` which will listen on port 8888.
 
 ## NHS AI Lab Skunkworks
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
