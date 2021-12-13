@@ -48,7 +48,7 @@ Using historical admissions data, the forecast model feeds into the allocation a
 
 * The forecast functionality integrated into the UI requires data; a dummy function representing sine wave data is provided by default
 * The greedy allocation agent is the only agent integrated into the UI due to performance issues with the MCTS approach
-* A dummy data generator is not yet included
+* A fake data generator is not yet included
 * This tool has been tested on macOS
 
 ## Getting Started
