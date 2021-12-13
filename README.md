@@ -73,10 +73,10 @@ The visual forecast has two operating modes, specified in [`app/app/api.py`](app
 REAL_DATA = False
 ```
 
-1. Dummy forecast data (default, a sine wave)
+1. Fake forecast data (default, a sine wave)
 2. Historic forecast data
 
-To operate the tool in dummy mode you will need to create the minumum required data artefacts:
+To operate the tool using the fake forecast data you will need to create the minumum required data artefacts:
 
 #### 1. Create a virtual hospital
 
@@ -97,6 +97,7 @@ This will create the `forecast_split_random.pkl` file in `app/app/data/`, based 
 With the required artefacts in place, to launch the UI from your virtual environment, run `python app/run.py` which will listen on port 8888.
 
 ## NHS AI Lab Skunkworks
+
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
 
 Find out more about the [NHS AI Lab Skunkworks](https://www.nhsx.nhs.uk/ai-lab/ai-lab-programmes/skunkworks/).
