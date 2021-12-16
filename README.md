@@ -38,7 +38,7 @@ Component|Description|Documentation
 Virtual Hospital|Defines a hospital with wards and beds|[`src/hospital`](src/hospital)
 Allocation Agent|Allocates a new patient based on the virtual hospital environment and constraints|[`src/agent`](src/agent)
 Demand Forecast|Generates a forecast for bed demand based on historical data|[`src/forecasting`](src/forecasting)
-Fake data generation|Description of how to generate fake data to test the setup and running of the repo|[`Fake_data_generation/`](fake_data_generation)
+Fake data generation|Description of how to generate fake data to test the setup and running of the repo|[`fake_data_generation/`](fake_data_generation)
 UI|A web-based frontend built with Plotly Dash that integrates the virtual hospital, allocation and demand forecast components|`app`
 
 Using historical admissions data, the forecast model feeds into the allocation agent (for Monte Carlo Tree Search) and suggests the best available bed for an incoming patient:

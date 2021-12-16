@@ -2,10 +2,15 @@
 
 ## Overview and Purpose
 This directory contains two files called 
-- `forecast_generate_fake_data.py`
-- `patient_generate_fake_data.py`
+- `generate_fake_data.py`
 
-The purpose of both `forecast_generate_fake_data.py` and `patient_generate_fake_data.py` is to create a `.csv` file with fake data with the following intended applications:
+The purpose of `generate_fake_data.py` is to create four files: 
+- patient_df.csv
+- historic_admissions.csv
+- hourly_elective_prob.json
+- specialty_info.json
+
+with fake data with the following intended applications:
 - As an example of how data needs to be formatted to be passed into the models.
 - To ensure the files are being generated correctly to test GUI setup.
 - To test the setup and running of the repo.
@@ -19,89 +24,44 @@ The data is generated completely randomly, with each field having random values 
 
 Note a number of the fields will show only test categories and may not be reflective of the types of categories or number of categories types in each field. However the formatting of the fields is reflective as an example of what is required to run the models.
 
-## `forecast_generate_fake_data.py`
-Everything needed to generate fake data using `forecast_generate_fake_data.py` is contained in the file and does not need any additional files to run.
 
-This fake data file created will follow the data dictionary as outlined [here.](../config/historic_admissions_data_dictionary.json)
+## `generate_fake_data.py`
 
-### How to run
-Before running ensure your environment is set up as described in: [README.md](../README.md) 
+The categories for the fields in `generate_fake_data.py` can be found in [patient_fake_data_categories.json](config/fake_data_categories/patient_fake_data_categories.json). The categories specified in this file are randomly chosen to fill the corresponding fields in the fake data. This is done in `generate_fake_data.py`. 
 
-Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
+Data fields that do not have their categories specified in [patient_fake_data_categories.json](../config/fake_data_categories/patient_fake_data_categories.json) or are not categorical variables have the fake data required generated in `generate_fake_data.py` line by line to show how the data is being generated for each field. In `generate_fake_data.py` the fields are split into the field data type (e.g. str, int) required for the models to train.
 
-There are a number of parameters to run the `patient_generate_fake_data.py`, available using the `--help` flag:
-
-```
-$ python forecast_generate_fake_data.py --help
-usage: forecast_generate_fake_data.py [-h] [--number_of_records NUMBER_OF_RECORDS] [--filename FILENAME] [--seed SEED]
-
-The purpose of `forecast_generate_fake_data.py` is to create a `.csv` file with fake data with the following
-intended applications: An example of how data needs to be formatted to be passed into the model and to test
-the setup and running of the repo.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --number_of_records NUMBER_OF_RECORDS, -nr NUMBER_OF_RECORDS
-                        [int] Number of records to generate. Default is 100.
-  --filename FILENAME, -fn FILENAME
-                        [str] The name of the csv file saved at the end (do not add.csv). The default name
-                        is set to "historic_admissions". This will generate a file called
-                        "historic_admissions.csv" .
-  --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so
-                        will generate a different result each time.
-```
-
-To test the setup and the running of the repo it is recommended to run `forecast_generate_fake_data` with the following arguments:
-  ```bash
-$ python forecast_generate_fake_data.py -nr 200
-```
-or depending on your machine setup:
-
-  ```bash
-$ python3 forecast_generate_fake_data -nr 200
-``` 
-
-
-## `patient_generate_fake_data.py`
-
-The categories for the fields in `patient_generate_fake_data.py` can be found in [patient_fake_data_categories.json](config/fake_data_categories/patient_fake_data_categories.json). The categories specified in this file are randomly chosen to fill the corresponding fields in the fake data. This is done in `patient_generate_fake_data.py`. 
-
-Data fields that do not have their categories specified in [patient_fake_data_categories.json](../config/fake_data_categories/patient_fake_data_categories.json) or are not categorical variables have the fake data required generated in `patient_generate_fake_data.py` line by line to show how the data is being generated for each field. In `patient_generate_fake_data.py` the fields are split into the field data type (e.g. str, int) required for the models to train.
-
-This fake data file created will follow the data dictionary as outlined [here.](../config/patient_generate_fake_data.json)
+This fake data file created will follow the data dictionary as outlined [here.](../config/generate_fake_data.json)
 
 ### How to run
 Before running ensure your environment is set up as described in: [README.md](../README.md).
 
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
 
-There are a number of parameters to run the `patient_generate_fake_data.py`, available using the `--help` flag:
+There are a number of parameters to run the `generate_fake_data.py`, available using the `--help` flag:
 
 ```
-$ python patient_generate_fake_data.py --help
-usage: patient_generate_fake_data.py [-h] [--number_of_records NUMBER_OF_RECORDS] [--filename FILENAME] [--seed SEED]
+$ python generate_fake_data.py --help
+usage: generate_fake_data.py [-h] [--number_of_records NUMBER_OF_RECORDS]
+                                     [--directory_name DIRECTORY_NAME] [--seed SEED]
 
-The purpose of `patient_generate_fake_data.py` is to create a `.csv` file with fake data with the following
-intended applications: An example of how data needs to be formatted to be passed into the model and to test
-the setup and running of the repo.
+The purpose of `generate_fake_data.py` is to create four files: "patient_df.csv", "historic_admissions.csv", "hourly_elective_prob.json", and "specialty_info.json" file with fake data with the following intended applications: An example of how data needs to be formatted to be passed into the model and to test the setup and running of the repo.
 
 optional arguments:
   -h, --help            show this help message and exit
   --number_of_records NUMBER_OF_RECORDS, -nr NUMBER_OF_RECORDS
-                        [int] Number of records to generate. Default is 100.
-  --filename FILENAME, -fn FILENAME
-                        [str] The name of the csv file saved at the end (do not add.csv). The default name
-                        is set to "patient_df". This will generate a file called "patient_df.csv" .
-  --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so
-                        will generate a different result each time.
+                        [int] Number of fake patient records to generate. Default is 100.
+  --directory_name DIRECTORY_NAME, -dn DIRECTORY_NAME
+                        [str] Running this script creates a new directory by this name. Directory will not over write previous directory if directory name already exists.
+  --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so will generate a different result each time.
   ```
 
-To test the setup and the running of the repo it is recommended to run `patient_generate_fake_data` with the following arguments:
+To test the setup and the running of the repo it is recommended to run `generate_fake_data` with the following arguments:
   ```bash
-$ python patient_generate_fake_data.py -nr 200
+$ python generate_fake_data.py -nr 200
 ```
 or depending on your machine setup:
 
   ```bash
-$ python3 patient_generate_fake_data.py -nr 200
+$ python3 generate_fake_data.py -nr 200
 ``` 

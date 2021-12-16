@@ -130,10 +130,10 @@
             "ADMIT_DTTM": [
                 {
                     "name": "ADMIT_DTTM",
-                    "description": "The date and time of the patient admission",
+                    "description": "The date and time of the patient admission, aggregated to every hour",
                     "source": "PAS - Inpatient Spells",
                     "type": "datetime64[ns]",
-                    "Entry options": "e.g. 05/06/2019 15:43"
+                    "Entry options": "e.g. 05/06/2019 15:00:00"
                 }
             ],
             "ADMIT_DAY": [
