@@ -22,6 +22,8 @@ Note a number of the fields will show only test categories and may not be reflec
 ## `forecast_generate_fake_data.py`
 Everything needed to generate fake data using `forecast_generate_fake_data.py` is contained in the file and does not need any additional files to run.
 
+This fake data file created will follow the data dictionary as outlined [here.](../config/historic_admissions_data_dictionary.json)
+
 ### How to run
 Before running ensure your environment is set up as described in: [README.md](../README.md) 
 
@@ -31,8 +33,7 @@ There are a number of parameters to run the `patient_generate_fake_data.py`, ava
 
 ```
 $ python forecast_generate_fake_data.py --help
-usage: forecast_generate_fake_data.py [-h] [--number_of_records NUMBER_OF_RECORDS] [--filename FILENAME]
-                                      [--seed SEED]
+usage: forecast_generate_fake_data.py [-h] [--number_of_records NUMBER_OF_RECORDS] [--filename FILENAME] [--seed SEED]
 
 The purpose of `forecast_generate_fake_data.py` is to create a `.csv` file with fake data with the following
 intended applications: An example of how data needs to be formatted to be passed into the model and to test
@@ -44,8 +45,8 @@ optional arguments:
                         [int] Number of records to generate. Default is 100.
   --filename FILENAME, -fn FILENAME
                         [str] The name of the csv file saved at the end (do not add.csv). The default name
-                        is set to "forecast_fake_data". This will generate a file called
-                        "forecast_fake_data.csv" .
+                        is set to "historic_admissions". This will generate a file called
+                        "historic_admissions.csv" .
   --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so
                         will generate a different result each time.
 ```
@@ -67,6 +68,7 @@ The categories for the fields in `patient_generate_fake_data.py` can be found in
 
 Data fields that do not have their categories specified in [patient_fake_data_categories.json](../config/fake_data_categories/patient_fake_data_categories.json) or are not categorical variables have the fake data required generated in `patient_generate_fake_data.py` line by line to show how the data is being generated for each field. In `patient_generate_fake_data.py` the fields are split into the field data type (e.g. str, int) required for the models to train.
 
+This fake data file created will follow the data dictionary as outlined [here.](../config/patient_generate_fake_data.json)
 
 ### How to run
 Before running ensure your environment is set up as described in: [README.md](../README.md).
@@ -89,7 +91,7 @@ optional arguments:
                         [int] Number of records to generate. Default is 100.
   --filename FILENAME, -fn FILENAME
                         [str] The name of the csv file saved at the end (do not add.csv). The default name
-                        is set to "patient_fake_data". This will generate a file called "patient_fake_data.csv" .
+                        is set to "patient_df". This will generate a file called "patient_df.csv" .
   --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so
                         will generate a different result each time.
   ```

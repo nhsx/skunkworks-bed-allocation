@@ -31,9 +31,9 @@ parser.add_argument(
     "--filename",
     "-fn",
     type=str,
-    default="patient_fake_data",
+    default="patient_df",
     help="""[str] The name of the csv file saved at the end (do not add.csv).
-    The default name is set to "patient_fake_data". This will generate a file called "patient_fake_data.csv" . """,
+    The default name is set to "patient_df". This will generate a file called "patient_df.csv" . """,
 )
 
 parser.add_argument(

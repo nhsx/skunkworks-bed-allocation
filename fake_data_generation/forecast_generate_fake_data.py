@@ -30,9 +30,9 @@ parser.add_argument(
     "--filename",
     "-fn",
     type=str,
-    default="forecast_fake_data",
+    default="historic_admissions",
     help="""[str] The name of the csv file saved at the end (do not add.csv).
-    The default name is set to "forecast_fake_data". This will generate a file called "forecast_fake_data.csv" . """,
+    The default name is set to "historic_admissions". This will generate a file called "historic_admissions.csv" . """,
 )
 
 parser.add_argument(
