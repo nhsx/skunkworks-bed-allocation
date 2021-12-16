@@ -59,7 +59,7 @@ def create_df_prob_json(
         raise ValueError("Elective field must only contain 1 and 0.") from e
 
     # For each hour state the proportion of elective patients per hour
-    df["elective_prob"] = (df[1] / df["sum"]) / df["sum"]
+    df["elective_prob"] = df[1] / df["sum"]
 
     # Round to two decimal places and fill in missing values
     df["elective_prob"] = df["elective_prob"].round(2).fillna(0)
