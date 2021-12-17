@@ -84,14 +84,4 @@ or depending on your machine setup:
 $ python3 generate_fake_data.py -nr 2000
 ```
 
-The CLI commands to move the generated files to the right place for model training can be seen below: 
-
-```
-$ cp *.json ../../src/forecasting
-
-$ cp historic_admissions.csv ../../src/forecasting/data
-
-$ cp historic_admissions.csv ../../data/
-
-$ cp patient_df.csv ../../data/
-```
+Once created, copy the contents of `fake_data_files` into the `data/` folder in the root of the repository.
