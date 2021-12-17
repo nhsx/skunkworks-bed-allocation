@@ -14,7 +14,7 @@ import pandas as pd
 import random
 
 from data_preparation.create_json_files import (
-    create_df_prob_json,
+    create_hourly_elective_prob_json,
     create_specialty_info_json,
 )
 
@@ -39,7 +39,7 @@ parser.add_argument(
     "-dn",
     default="fake_data_files",
     type=str,
-    help="[str] Running this script creates a new directory by this name. Directory will not over write previous directory if directory name already exists.",
+    help="""[str] Running this script creates a new directory by this name. Directory will not over write previous directory if directory name already exists. Default name is "fake_data_files".""",
 )
 
 parser.add_argument(
@@ -62,8 +62,8 @@ if args.seed is not None:
     np.random.seed(seed=args.seed)
 
 
-# -----CREATE patient_df.csv-------------------------------------------------------
-# ----------------------------------------------------------------------------------
+# -----CREATE patient_df.csv------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
 # Load data_description.json to get columns required for training data
 with open("../config/patient_data_dictionary.json", "r") as file:
@@ -109,8 +109,8 @@ print(
 )
 
 
-# -----CREATE historic_admissions.csv-------------------------------------------------------
-# ----------------------------------------------------------------------------------
+# -----CREATE historic_admissions.csv---------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
 # Count the number of patients per hour
 forecast = df["ADMIT_DTTM"].value_counts()
@@ -141,15 +141,15 @@ print(
 
 
 # -----CREATE hourly_elective_prob.json-------------------------------------------------------
-# ----------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------
 
-create_df_prob_json(
+create_hourly_elective_prob_json(
     f"{args.directory_name}/patient_df.csv", args.directory_name
 )
 
 
-# -----CREATE hourly_elective_prob.json-------------------------------------------------------
-# ----------------------------------------------------------------------------------
+# -----CREATE specialty_info.json-------------------------------------------------------
+# --------------------------------------------------------------------------------------
 
 create_specialty_info_json(
     f"{args.directory_name}/patient_df.csv",

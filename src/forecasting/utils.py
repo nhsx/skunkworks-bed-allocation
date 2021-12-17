@@ -6,7 +6,7 @@ import pandas as pd
 
 DIRNAME = os.path.dirname(__file__)
 
-START_FORECAST = pd.to_datetime("21/06/2021 00:00", dayfirst=True)
+START_FORECAST = pd.to_datetime("25/01/1855 00:00", dayfirst=True)
 HISTORIC_HOURS = 168
 FORECAST_HOURS = 24
 HOURS_IN_WEEK = 168

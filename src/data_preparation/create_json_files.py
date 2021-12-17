@@ -2,11 +2,11 @@ import pandas as pd
 import json
 
 
-def create_df_prob_json(
+def create_hourly_elective_prob_json(
     path_to_patient_df_csv: str, output_directory: str = "."
 ) -> pd.DataFrame:
     """
-    This function uses data from "patient_df.csv" to create "df_prob.json". This is needed
+    This function uses data from "patient_df.csv" to create "hourly_elective_prob.json". This is needed
     to create the forecast. It is important that "patient_df.csv" follows this data dictionary including
     all required fields and field formats: "../../config/patient_data_dictionary.json".
 
@@ -16,7 +16,7 @@ def create_df_prob_json(
         The input is the path to the ""patient_df.csv"" file. With format: "../../config/patient_data_dictionary.json"
 
     output_directory: str
-        The directory where "create_df_prob.json" will be saved. The default is to be saved in the same directory as this file.
+        The directory where "create_hourly_elective_prob.json" will be saved. The default is to be saved in the same directory as this file.
 
     Returns
     ----------
@@ -25,7 +25,7 @@ def create_df_prob_json(
         patients per date and hour.
 
     json file:
-        Called - "create_df_prob.json". This file is required to run the forecast and contains the df as summarised above.
+        Called - "create_hourly_elective_prob.json". This file is required to run the forecast and contains the df as summarised above.
         The file is saved in the directory define as the input.
 
     """
@@ -65,10 +65,14 @@ def create_df_prob_json(
     df["elective_prob"] = df["elective_prob"].round(2).fillna(0)
 
     # Write dataframe to json format
-    df["elective_prob"].to_json(f"{output_directory}/df_prob.json")
+    df["elective_prob"].to_json(
+        f"{output_directory}/hourly_elective_prob.json"
+    )
 
     # Message to show script has run
-    print(f"Fake Data Generated! File saved: {output_directory}/df_prob.json.")
+    print(
+        f"Fake Data Generated! File saved: {output_directory}/hourly_elective_prob.json."
+    )
     return df
 
 
@@ -144,12 +148,34 @@ def create_specialty_info_json(
 
 
 def load_is_medical_mapping(path_to_is_medical_json: str) -> pd.DataFrame:
+    """
+    This function takes the defined json value
 
+    Parameters
+    ----------
+     path_to_is_medical_json: str
+        This will contain a list of specilaities listed in `ADMIT_SPEC` in the `patient_df.csv` file and state whether
+        it is medical or not by `true` or `false` in a python dictionary format, e.g. {"Urology" : false, "Cardiology": True}.
+        An example of the file which needs to be created can be found here: "../../config/fake_data_categories/fake_speciality_is_medical_mapping.json".
+
+
+    Returns
+    ----------
+    mapping_df : pd.DataFrame
+        The dataframe contains the contents from the json file.
+
+    """
+    # Load json file
     with open(path_to_is_medical_json, "r") as file:
         mapping = json.load(file)
+
+    # Read contents and fornat
     mapping_df = pd.DataFrame.from_dict(mapping, orient="index")
     mapping_df.reset_index(level=0, inplace=True)
+
+    # Rename columns in dataframe
     mapping_df.rename(
         {"index": "ADMIT_SPEC", 0: "is_medical"}, axis=1, inplace=True
     )
+
     return mapping_df

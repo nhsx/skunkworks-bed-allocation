@@ -3,11 +3,11 @@
 This directory includes the file `create_json_files.py`.
 
 This contains two functions (more information on these functions can be seen below):
-- `create_df_prob_json`
+- `create_hourly_elective_prob.json`
 - `create_specialty_info_json`
 
 To create the required json files for the forecast model respectfully:
-- `df_prob.json`
+- `hourly_elective_prob.json`
 - `specialty_info.json`
 
 It is important these files are generated from `patient_df.csv` for the forecast to be generated. It is important that `patient_df.csv` follows this data dictionary including all required fields and field formats. This can be found [here](../../config/patient_data_dictionary.json).
@@ -15,11 +15,11 @@ It is important these files are generated from `patient_df.csv` for the forecast
 These functions can be called in a `.py` file or run in a notebook. An example of importing and running the functions can be seen below:
 ```
 from data_preparation.create_json_files import (
-    create_df_prob_json,
+    create_hourly_elective_prob.json,
     create_specialty_info_json,
 )
 
-create_df_prob_json(
+create_hourly_elective_prob.json(
     "path/to/patient_df.csv", "directory_name"
 )
 
@@ -28,13 +28,13 @@ create_specialty_info_json(
 )
 ```
 
-## create_df_prob_json
+## create_hourly_elective_prob.json
 ---
-This function uses data from `patient_df.csv` to create `df_prob.json`. This is needed
+This function uses data from `patient_df.csv` to create `hourly_elective_prob.json`. This is needed
 to create the forecast. It is important that `patient_df.csv` follows this data dictionary including
 all required fields and field formats: `../../config/patient_data_dictionary.json`.
 
-`df_prob.json` represents the proportion of elective patients seen on that date and hour.
+`hourly_elective_prob.json` represents the proportion of elective patients seen on that date and hour.
 
 For example if 10 patients in total were seen on 21st July 1955 at 1pm, 4 were elective and 6 were non-elective the function would return 0.4 for that date and time (4/10).
 
@@ -50,7 +50,7 @@ Parameters
         The input is the path to the "patient_df.csv" file. With format: "../../config/patient_data_dictionary.json".
 
     output_directory: str
-        The directory where "create_df_prob.json" will be saved. The default is to be saved in the same directory as this file.
+        The directory where "create_hourly_elective_prob.json" will be saved. The default is to be saved in the same directory as this file.
 
 Returns
 ----------
@@ -59,7 +59,7 @@ Returns
         patients per date and hour.
 
     json file:
-        Called - "create_df_prob.json". This file is required to run the forecast and contains the df as summarised above.
+        Called - "create_hourly_elective_prob.json". This file is required to run the forecast and contains the df as summarised above.
         The file is saved in the directory define as the input.
 ```
 
@@ -102,7 +102,7 @@ Note:
         An example file to create can be found here: "../../config/fake_data_categories/fake_speciality_is_medical_mapping.json"
     
     output_directory: str
-        The directory where "df_prob.json" will be saved. The default is to be saved in the same directory as this file.
+        The directory where "hourly_elective_prob.json" will be saved. The default is to be saved in the same directory as this file.
 
     Returns
     ----------

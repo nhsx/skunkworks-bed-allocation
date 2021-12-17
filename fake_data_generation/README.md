@@ -1,16 +1,19 @@
 # Generating fake data
 
 ## Overview and Purpose
-This directory contains two files called 
+This directory contains one file called 
 - `generate_fake_data.py`
 
-The purpose of `generate_fake_data.py` is to create four files: 
-- patient_df.csv
-- historic_admissions.csv
-- hourly_elective_prob.json
-- specialty_info.json
+The purpose of `generate_fake_data.py` is to create four files with fake data in the following order: 
 
-with fake data with the following intended applications:
+file|description
+---|---
+`patient_df.csv`| This fake data file will follow the data dictionary as outlined [here.](../config/patient_data_dictionary.json)
+`historic_admissions.csv`| This aggreates the number of patients from `patient_df.csv` by date and hour. This fake data file will follow the data dictionary as outlined [here.](../config/historic_admissions_data_dictionary.json)
+`hourly_elective_prob.json`| More information about this file can be found [here.](../src/data_preparation/README.md)
+`specialty_info.json`| More information about this file can be found [here.](../src/data_preparation/README.md)
+
+The fake data is intended for us with the following applications:
 - As an example of how data needs to be formatted to be passed into the models.
 - To ensure the files are being generated correctly to test GUI setup.
 - To test the setup and running of the repo.
@@ -31,12 +34,27 @@ The categories for the fields in `generate_fake_data.py` can be found in [patien
 
 Data fields that do not have their categories specified in [patient_fake_data_categories.json](../config/fake_data_categories/patient_fake_data_categories.json) or are not categorical variables have the fake data required generated in `generate_fake_data.py` line by line to show how the data is being generated for each field. In `generate_fake_data.py` the fields are split into the field data type (e.g. str, int) required for the models to train.
 
-This fake data file created will follow the data dictionary as outlined [here.](../config/generate_fake_data.json)
+The fake data generator creates a new directory in the directory the script is ran, the four files described above are then stored in the new directory. An example layout after `generate_fake_data.py` has run with the default new directory name (`fake_data_files`) can be seen below:
+```
+Folder
+│   generate_fake_data.py
+|
+└───fake_data_files
+    │   patient_df.csv
+    │   historic_admissions.csv
+    |   hourly_elective_prob.json
+    |   specialty_info.json
+```
+
 
 ### How to run
 Before running ensure your environment is set up as described in: [README.md](../README.md).
 
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
+
+*Note:*
+- The fake data generator will generate fake data between dates `1855-01-01 00:00:00`. and `1855-02-01 00:00:00` at 1 hour intervals. (`../src/forecasting/utils.py` has been updated for this to run.)
+- `generate_fake_data.py` creates a new directory each time it runs. If the directory name already exists an error will be thrown
 
 There are a number of parameters to run the `generate_fake_data.py`, available using the `--help` flag:
 
@@ -52,16 +70,17 @@ optional arguments:
   --number_of_records NUMBER_OF_RECORDS, -nr NUMBER_OF_RECORDS
                         [int] Number of fake patient records to generate. Default is 100.
   --directory_name DIRECTORY_NAME, -dn DIRECTORY_NAME
-                        [str] Running this script creates a new directory by this name. Directory will not over write previous directory if directory name already exists.
+                        [str] Running this script creates a new directory by this name. Directory will not over write previous directory if directory name already exists. Default name is "fake_data_files".
   --seed SEED, -s SEED  [int] If specified will ensure result is reproducible. Default is set to None so will generate a different result each time.
   ```
 
 To test the setup and the running of the repo it is recommended to run `generate_fake_data` with the following arguments:
   ```bash
-$ python generate_fake_data.py -nr 200
+$ python generate_fake_data.py -nr 2000
 ```
 or depending on your machine setup:
 
   ```bash
-$ python3 generate_fake_data.py -nr 200
-``` 
+$ python3 generate_fake_data.py -nr 2000
+```
+
