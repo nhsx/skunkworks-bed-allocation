@@ -95,7 +95,7 @@ df["LOS_HOURS"] = np.random.randint(1, 1000, size=(args.number_of_records))
 
 # Create random time range for the fake data (one month).
 date_ranges = pd.date_range(
-    start="1855-01-01 00:00:00", end="1855-02-01 00:00:00", freq="h"
+    start="1855-01-01 00:00:00", end="1855-06-01 00:00:00", freq="h"
 )
 df["ADMIT_DTTM"] = np.random.choice(date_ranges, size=args.number_of_records)
 df["ADMIT_HOUR"] = df["ADMIT_DTTM"].dt.hour

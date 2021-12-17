@@ -25,7 +25,7 @@ from forecasting.utils import (
     FORECAST_HOURS, # 24
     HISTORIC_HOURS, # 168 
     HOURS_IN_WEEK, # 168 
-    START_FORECAST, # 25/01/1855 00:00
+    START_FORECAST, # 01/05/1855 00:00
 )
 ```
 

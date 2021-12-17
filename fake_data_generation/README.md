@@ -53,7 +53,7 @@ Before running ensure your environment is set up as described in: [README.md](..
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
 
 *Note:*
-- The fake data generator will generate fake data between dates `1855-01-01 00:00:00`. and `1855-02-01 00:00:00` at 1 hour intervals. (`../src/forecasting/utils.py` has been updated for this to run.)
+- The fake data generator will generate fake data between dates `1855-01-01 00:00:00`. and `1855-06-01 00:00:00` at 1 hour intervals. (`../src/forecasting/utils.py` has been updated for this to run.)
 - `generate_fake_data.py` creates a new directory each time it runs. If the directory name already exists an error will be thrown
 
 There are a number of parameters to run the `generate_fake_data.py`, available using the `--help` flag:
@@ -84,3 +84,14 @@ or depending on your machine setup:
 $ python3 generate_fake_data.py -nr 2000
 ```
 
+The CLI commands to move the generated files to the right place for model training can be seen below: 
+
+```
+$ cp *.json ../../src/forecasting
+
+$ cp historic_admissions.csv ../../src/forecasting/data
+
+$ cp historic_admissions.csv ../../data/
+
+$ cp patient_df.csv ../../data/
+```
