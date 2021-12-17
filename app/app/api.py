@@ -27,7 +27,7 @@ from hospital.people import Patient, patient_to_dict
 DIRNAME = os.path.dirname(__file__)
 
 # Flag to set if using real vs dummy data
-REAL_DATA = False
+REAL_DATA = True
 
 if REAL_DATA:
 
@@ -36,8 +36,10 @@ if REAL_DATA:
             open(os.path.join(DIRNAME, "data/forecast_percentiles.pkl"), "rb")
         )
     except FileNotFoundError as e:
-        print("Forecast data not found, see "
-            "app/app/data/get_forecast_percentiles.py")
+        print(
+            "Forecast data not found, see "
+            "app/app/data/get_forecast_percentiles.py"
+        )
         raise e
 
     try:
@@ -331,7 +333,7 @@ def calc_occupancy(ward: Ward) -> int:
 
 def get_forecast(day: str, time: int) -> List[np.ndarray]:
     """
-    If real data is being used, reads it in, otherwise generates synthetic. 
+    If real data is being used, reads it in, otherwise generates synthetic.
     Then saves to JSON format.
     """
 
@@ -481,7 +483,10 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
                     max(forecast["forecast"]["time"]),
                 ],
             },
-            "yaxis": {"title": "Admissions per hour", "range": [-2, 42],},
+            "yaxis": {
+                "title": "Admissions per hour",
+                "range": [-2, 42],
+            },
             "legend": {
                 "yanchor": "top",
                 "y": 0.99,
