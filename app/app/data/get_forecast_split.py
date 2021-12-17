@@ -12,7 +12,7 @@ DIRNAME = os.path.dirname(__file__)
 
 def main():
     """
-    Generates patients based on forecast and finds the split in attributes, 
+    Generates patients based on forecast and finds the split in attributes,
     e.g. number of male vs female patients
     """
 
@@ -51,7 +51,7 @@ def main():
 
         # Initialises patient sampler, when dummy data being used set
         # historic=False
-        sampler = PatientSampler(day, hour, historic=False)
+        sampler = PatientSampler(day, hour, historic=True)
         # Samples patients according to forecast with filters off as want to
         # proportion of elective, etc. patients rather than filtering
         samples = sampler.sample_patients(
@@ -126,7 +126,13 @@ def main():
 
     pickle.dump(
         results_split,
-        open(os.path.join(DIRNAME, "forecast_split_random.pkl",), "wb",),
+        open(
+            os.path.join(
+                DIRNAME,
+                "forecast_split_random.pkl",
+            ),
+            "wb",
+        ),
     )
 
 
