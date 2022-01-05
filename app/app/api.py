@@ -395,10 +395,10 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
 
         # Changing times back to timestamps
         forecast["historic"]["time"] = pd.to_datetime(
-            forecast["historic"]["time"]
+            forecast["historic"]["time"], format="%d/%m/%Y %H:%M"
         )
         forecast["forecast"]["time"] = pd.to_datetime(
-            forecast["forecast"]["time"]
+            forecast["forecast"]["time"], format="%d/%m/%Y %H:%M"
         )
 
         # Cutting training data to just dates 4 days before forecast
@@ -411,6 +411,16 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
         training = ADMISSIONS.iloc[training_ids]
         training_time = training["ADMIT_DTTM"]
         training_data = training["Total"]
+
+        # Calculate y axis limit
+        y_limit = 0
+        for n in forecast["forecast"]["n_patients"]:
+            y_limit = max(n) if max(n) > y_limit else y_limit
+
+        for n in forecast["historic"]["n_patients"]:
+            y_limit = max(n) if max(n) > y_limit else y_limit
+
+        y_limit += 2
 
         data = []
         for period in ["forecast", "historic"]:
@@ -467,7 +477,7 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
                     forecast["forecast"]["time"][0],
                     forecast["forecast"]["time"][0],
                 ],
-                y=[-5, 50],
+                y=[-5, y_limit],
                 mode="lines",
                 line={"dash": "dash", "color": "black"},
                 showlegend=False,
@@ -485,7 +495,7 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
             },
             "yaxis": {
                 "title": "Admissions per hour",
-                "range": [-2, 42],
+                "range": [-2, y_limit],
             },
             "legend": {
                 "yanchor": "top",
