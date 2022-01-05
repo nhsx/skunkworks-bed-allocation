@@ -1,7 +1,7 @@
 {
     "SEX_DESC": [
-        "MALE",
-        "FEMALE"
+        "Male",
+        "Female"
     ],
     "COVID Positive": [
         0,
@@ -40,12 +40,13 @@
         1
     ],
     "ADMIT_DIV": [
-        "Test1",
-        "Test2"
+        "Medicine",
+        "Surgery"
     ],
     "ADMIT_SPEC": [
-        "Test1",
-        "Test2"
+        "Cardiology",
+        "Urology",
+        "General"
     ],
     "ADMIT_DAY": [
         0,
