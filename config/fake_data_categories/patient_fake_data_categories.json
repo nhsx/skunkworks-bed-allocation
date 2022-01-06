@@ -44,8 +44,14 @@
         "Surgery"
     ],
     "ADMIT_SPEC": [
-        "Speciality1",
-        "Speciality2"
+        "Trauma & Orthopaedic",
+        "General Internal Medicine",
+        "General Surgery",
+        "Respiratory Medicine",
+        "Endocrinology and Diabetes",
+        "Geriatric Medicine",
+        "Gastroenterology",
+        "Cardiology"
     ],
     "ADMIT_DAY": [
         0,

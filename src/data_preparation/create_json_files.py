@@ -122,7 +122,8 @@ def create_specialty_info_json(
     df["probability"] = df["DIM_PATIENT_ID"] / sum(df["DIM_PATIENT_ID"])
 
     # Round to two decimal places and fill in missing values
-    df["probability"] = df["probability"].round(2).fillna(0)
+    # AS commented out as prevents sum to 1 used later in patient_sampler.py#L279
+    # df["probability"] = df["probability"].round(2).fillna(0)
 
     # define if the department is medical or not
     # Load data_description.json to get columns required for training data
