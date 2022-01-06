@@ -3,17 +3,6 @@
 # Crude end-to-end integration test
 # Requires installation of modules in development mode
 
-echo "Creating virtual hospital:"
-python generate_hospital.py
-
-if [ $? -eq 0 ] 
-then 
-  echo "Successfully created virtual hospital" 
-else 
-  echo "Could not create virtual hospital"
-  exit 1
-fi
-
 echo "Creating fake data:"
 ./generate_fake_data.sh
 
@@ -55,6 +44,17 @@ then
   echo "Successfully generated patient forecast percentiles" 
 else 
   echo "Could not generate patient forecast percentiles"
+  exit 1
+fi
+
+echo "Creating virtual hospital:"
+python generate_hospital.py
+
+if [ $? -eq 0 ] 
+then 
+  echo "Successfully created virtual hospital" 
+else 
+  echo "Could not create virtual hospital"
   exit 1
 fi
 

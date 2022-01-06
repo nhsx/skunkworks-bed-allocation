@@ -47,10 +47,9 @@ Using historical admissions data, the forecast model feeds into the allocation a
 
 ## Known limitations
 
-* The forecast functionality integrated into the UI requires data; a test function representing sine wave data is provided by default
 * The greedy allocation agent is the only agent integrated into the UI due to performance issues with the MCTS approach
-* A fake data generator is not yet included
-* This tool has been tested on macOS
+* Several characteristics of the virtual hospital are hardcoded into this prototype
+* This tool has been tested on macOS only
 
 ## Getting Started
 
@@ -67,31 +66,24 @@ This project requires Python 3.9+.
 
 The user interface integrates the greedy allocation approach, which is independent of the time series forecast, as well as a visual forecast of upcoming patients.
 
-The visual forecast has two operating modes, specified in [`app/app/api.py`](app/app/api.py#L30):
+There are two ways to generate the required data artefacts before launching the UI:
 
-```python
-# Flag to set if using real vs dummy data
-REAL_DATA = False
+#### 1. Using fake data
+
+This repository includes a [fake data generator](fake_data_generation/) and [integration test](tests/integration) which will run an end-to-end build of the required data artefacts as well as launch the UI.
+
+To run the [integration test](tests/integration), install the tool in **development mode** (`pip install -e ."[testing]"`) and from the main project directory run:
+
+```bash
+cd tests/integration
+./integration_test.sh
 ```
 
-1. Fake forecast data (default, a sine wave)
-2. Historic forecast data
+and follow the instructions.
 
-To operate the tool using the fake forecast data you will need to create the minumum required data artefacts:
+#### 2. Using your own data
 
-#### 1. Create a virtual hospital
-
-From your virtual environment, follow the instructions in the [Virtual Hospital Notebook](notebooks/1.Virtual_Hospital_Environment.ipynb), which will create and store the `hospital.pkl` file in `data/`.
-
-#### 2. Create a forecast split of patient attributes
-
-The forecast is applied to a random split of patient attributes, which can be generated from your virtual environment by:
-
-Run `python app/app/data/get_forecast_split.py`
-
-> Note that this script currently takes ~2 hours to generate the required pickle file
-
-This will create the `forecast_split_random.pkl` file in `app/app/data/`, based on the attributes defined in [`patient_sampler.py`](src/forecasting/patient_sampler.py#L246).
+If you'd like to use your own data, please get in touch with us for support: ai-skunkworks@nhsx.nhs.uk
 
 ### Launching the user interface
 
