@@ -17,7 +17,7 @@ from forecasting.utils import (
 forecast_model = PatientForecast()
 
 # Train model, with training period ending at START_FORECAST
-forecast_model.train_model(START_FORECAST, training_hours=1440)
+forecast_model.train_model(START_FORECAST, training_hours=2880)
 
 # Get prediction for 1 week before START_FORECAST and 24hrs after a week after START_FORECAST
 results = forecast_model.call_forecast(
