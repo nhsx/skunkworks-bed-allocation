@@ -10,9 +10,9 @@ cd tests/integration
 This will perform the following actions:
 
 1. Create virtual hospital
-2. Generate fake data
+2. Generate fake data (respond Y or y when prompted)
 3. Generate Time Series forecast
-5. Generate random patient split attributes
+5. Generate patient attributes
 6. Generate forecast percentiles
 7. Run the UI
 
