@@ -1,7 +1,0 @@
-,Ward name,Ward Specialty,Specialty,Ward sex,Ward COVID-19 Status,Bed count (July 2021),Side room count
-0,Ward A,Medicine,General Surgery,Mixed,Green,31.0,2.0
-1,Ward B,Medicine,Endocrinology and Diabetes,Female,Green,27.0,6.0
-2,Ward C,Medicine,Endocrinology and Diabetes,Male,Green,27.0,6.0
-3,Ward D,Medicine,Respiratory Medicine,Mixed,Red,18.0,2.0
-4,Ward E,Surgery,General Surgery,Mixed,Green,24.0,0.0
-5,Ward F,Surgery,Trauma & Orthopaedic,Mixed,Green,27.0,3.0
