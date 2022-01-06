@@ -29,6 +29,7 @@ DIRNAME = os.path.dirname(__file__)
 # Flag to set if using real vs dummy data
 REAL_DATA = True
 
+# Errors are not thrown as this creates a catch 22 when creating fake data
 if REAL_DATA:
 
     try:
@@ -37,10 +38,10 @@ if REAL_DATA:
         )
     except FileNotFoundError as e:
         print(
-            "Forecast data not found, see "
+            "Warning: forecast data not found, see "
             "app/app/data/get_forecast_percentiles.py"
         )
-        raise e
+        # raise e
 
     try:
         ADMISSIONS = pd.read_csv(
@@ -48,14 +49,14 @@ if REAL_DATA:
             index_col=0,
         )
     except FileNotFoundError as e:
-        print("Training data not found")
-        raise e
+        print("Warning: training data not found")
+        # raise e
 
 try:
     WARDS = pd.read_csv(os.path.join(DIRNAME, "data/wards.csv"), index_col=0)
 except FileNotFoundError as e:
-    print("Ward file not found")
-    raise e
+    print("Warning: ward file not found")
+    # raise e
 
 
 FIELD_MAP = {
