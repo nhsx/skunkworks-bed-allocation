@@ -71,7 +71,7 @@ This function uses data from `patient_df.csv` to create `specialty_info.json`. T
 
 This function calculates the portion of patients seen in each speacility across the historic data found in `patient_df.csv` and maps the speciality to `is_medical` or not (more information on this below).
 
-For example if there were three specialities that saw 20 patients in total, (real examples may include Urology or Cardiology by in this example spec1, spec2 and spec3 will be used) such as:
+For example if there were three specialities that saw 20 patients in total, (real examples may include Urology or Cardiology but in this example spec1, spec2 and spec3 will be used) such as:
 
 spec|number of patients (time period covers whole dataset)|proportion of patient seen by each speciality
 ---|---|---|

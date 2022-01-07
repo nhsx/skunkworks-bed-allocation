@@ -17,7 +17,8 @@ def load_timeseries(freq: str = "H") -> pd.DataFrame:
 
     try:
         df = pd.read_csv(
-            os.path.join(DIRNAME, "data/historic_admissions.csv"), index_col=0
+            os.path.join(DIRNAME, "../../data/historic_admissions.csv"),
+            index_col=0,
         )
     except FileNotFoundError as e:
         print("Historic admissions data not found")
