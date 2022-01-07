@@ -23,7 +23,7 @@ The following should be noted with regards to using the fake data generators and
 - *DO NOT* use the fake data generated to inform any insights to be applied to a real world setting.
 - *DO NOT* use the fake data to test the performance of the model.
 
-The data is generated completely randomly, with each field having random values generated independently of other fields. This generator was created having never been exposed to the real data.
+The data is generated completely randomly, with each field having random values generated independently of other fields. The ward specialties used are real, and have not been switched to fake names due to hard coding within the codebase. All other fields were created having never been exposed to the real data.
 
 Note a number of the fields will show only test categories and may not be reflective of the types of categories or number of categories types in each field. However the formatting of the fields is reflective as an example of what is required to run the models.
 
