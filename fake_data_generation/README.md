@@ -48,7 +48,7 @@ Folder
 
 
 ### How to run
-Before running ensure your environment is set up as described in: [README.md](../README.md).
+Before running ensure your environment is set up in development mode as described in: [README.md](../README.md#Getting-Started).
 
 Please note all bash commands listed below assume the working directory is `fake_data_generation` (this directory).
 
