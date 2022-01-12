@@ -12,6 +12,8 @@ The admissions forecast model consisted of four components which account for:
 
 We captured the long term trend in the historic admissions data using a Gaussian Process (GP), inspired by previous work of Vehtari et al., as summarised in this [blog post](https://avehtari.github.io/casestudies/Birthdays/birthdays.html#Model_3:_Slow_trend_+_yearly_seasonal_trend_+_day_of_week). A GP does not constrain the model to take on any particular form. Instead, it returns a distribution over the functions which are consistent with the observed data, in this case, the historic admissions timeseries. In practice, exact GPs can be inefficient to calculate, we therefore utilised the Hilbert Space approximation based on [this numpyro tutorial](http://num.pyro.ai/en/latest/examples/hsgp.html) to ensure tractable runtimes.
 
+This walkthrough is also available as a [notebook](../../notebooks/4.Time_Series_Forecast.ipynb).
+
 ## 2. Building the forecast model
 
 ### 2.1 Import required modules
