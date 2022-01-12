@@ -6,7 +6,7 @@ import pandas as pd
 
 DIRNAME = os.path.dirname(__file__)
 
-START_FORECAST = pd.to_datetime("21/06/2021 00:00", dayfirst=True)
+START_FORECAST = pd.to_datetime("01/05/1855 00:00", dayfirst=True)
 HISTORIC_HOURS = 168
 FORECAST_HOURS = 24
 HOURS_IN_WEEK = 168
@@ -17,7 +17,8 @@ def load_timeseries(freq: str = "H") -> pd.DataFrame:
 
     try:
         df = pd.read_csv(
-            os.path.join(DIRNAME, "data/historic_admissions.csv"), index_col=0
+            os.path.join(DIRNAME, "../../data/historic_admissions.csv"),
+            index_col=0,
         )
     except FileNotFoundError as e:
         print("Historic admissions data not found")

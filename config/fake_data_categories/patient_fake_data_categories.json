@@ -1,0 +1,65 @@
+{
+    "SEX_DESC": [
+        "Male",
+        "Female"
+    ],
+    "COVID Positive": [
+        0,
+        1
+    ],
+    "COVID Re-Swab": [
+        0,
+        1
+    ],
+    "Dementia": [
+        0,
+        1
+    ],
+    "End Of Life": [
+        0,
+        1
+    ],
+    "Exposed to COVID": [
+        0,
+        1
+    ],
+    "Falls": [
+        0,
+        1
+    ],
+    "Visual Impairment": [
+        0,
+        1
+    ],
+    "Visual Supervision": [
+        0,
+        1
+    ],
+    "ELECTIVE": [
+        0,
+        1
+    ],
+    "ADMIT_DIV": [
+        "Medicine",
+        "Surgery"
+    ],
+    "ADMIT_SPEC": [
+        "Trauma & Orthopaedic",
+        "General Internal Medicine",
+        "General Surgery",
+        "Respiratory Medicine",
+        "Endocrinology and Diabetes",
+        "Geriatric Medicine",
+        "Gastroenterology",
+        "Cardiology"
+    ],
+    "ADMIT_DAY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ]
+}

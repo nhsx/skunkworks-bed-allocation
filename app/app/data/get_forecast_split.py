@@ -7,12 +7,14 @@ import pandas as pd
 from forecasting.patient_sampler import PatientSampler
 from forecasting.utils import map_to_date
 
+import argparse
+
 DIRNAME = os.path.dirname(__file__)
 
 
-def main():
+def main(num_samples=1000):
     """
-    Generates patients based on forecast and finds the split in attributes, 
+    Generates patients based on forecast and finds the split in attributes,
     e.g. number of male vs female patients
     """
 
@@ -38,9 +40,6 @@ def main():
     # Want splits to be for any patients admitted in next 4 hours
     hours_ahead = 4
 
-    # Take 1000 samples from posterior and find average split
-    num_samples = 1000
-
     male = []
     elective = []
     medical = []
@@ -51,7 +50,7 @@ def main():
 
         # Initialises patient sampler, when dummy data being used set
         # historic=False
-        sampler = PatientSampler(day, hour, historic=False)
+        sampler = PatientSampler(day, hour, historic=True)
         # Samples patients according to forecast with filters off as want to
         # proportion of elective, etc. patients rather than filtering
         samples = sampler.sample_patients(
@@ -126,10 +125,35 @@ def main():
 
     pickle.dump(
         results_split,
-        open(os.path.join(DIRNAME, "forecast_split_random.pkl",), "wb",),
+        open(
+            os.path.join(
+                DIRNAME,
+                "forecast_split_random.pkl",
+            ),
+            "wb",
+        ),
     )
 
 
 if __name__ == "__main__":
 
-    main()
+    # Get arguments from command line
+    # (If args are not specified default values will be used.)
+    parser = argparse.ArgumentParser(
+        description="""The purpose of `get_forecast_split.py` is to create the file `forecast_split_random.pkl` containing 
+        split of patient demographics based on historic data."""
+    )
+
+    # Args to generate
+    parser.add_argument(
+        "--number_of_samples",
+        "-n",
+        type=int,
+        default=1000,
+        help="[int] Number of samples to use from the posterior. Default is 1000.",
+    )
+
+    # Read arguments from the command line
+    args = parser.parse_args()
+
+    main(args.number_of_samples)

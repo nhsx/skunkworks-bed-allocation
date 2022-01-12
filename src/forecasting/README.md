@@ -12,6 +12,8 @@ The admissions forecast model consisted of four components which account for:
 
 We captured the long term trend in the historic admissions data using a Gaussian Process (GP), inspired by previous work of Vehtari et al., as summarised in this [blog post](https://avehtari.github.io/casestudies/Birthdays/birthdays.html#Model_3:_Slow_trend_+_yearly_seasonal_trend_+_day_of_week). A GP does not constrain the model to take on any particular form. Instead, it returns a distribution over the functions which are consistent with the observed data, in this case, the historic admissions timeseries. In practice, exact GPs can be inefficient to calculate, we therefore utilised the Hilbert Space approximation based on [this numpyro tutorial](http://num.pyro.ai/en/latest/examples/hsgp.html) to ensure tractable runtimes.
 
+This walkthrough is also available as a [notebook](../../notebooks/4.Time_Series_Forecast.ipynb).
+
 ## 2. Building the forecast model
 
 ### 2.1 Import required modules
@@ -25,7 +27,7 @@ from forecasting.utils import (
     FORECAST_HOURS, # 24
     HISTORIC_HOURS, # 168 
     HOURS_IN_WEEK, # 168 
-    START_FORECAST, # 21/06/2021 00:00
+    START_FORECAST, # 01/05/1855 00:00
 )
 ```
 
@@ -65,7 +67,7 @@ pickle.dump(results, open("../data/forecast_results.pkl", "wb"))
 
 ## 3. Validating the forecast model
 
-In order to check the performance of the demand predictor, we need to validate the predictions against historic admissions data. We can do this by training the model on historic patient admis- sions data, for example on the 120 days between 01/01/2021 and 30/04/2021. We then generate a forecast for the next 7 days, in this example between 01/05/2021 and 07/05/2021, and compare it to historic data from that time period. We can look at where the admitted number of patients for each hour lies compared to different confidence intervals and check that the correct amount of historic data lies within each confidence interval, for example 50% of the actual patients that arrived should fall within the 50% confidence interval predicted by the model.
+In order to check the performance of the demand predictor, we need to validate the predictions against historic admissions data. We can do this by training the model on historic patient admissions data, for example on the 120 days between 01/01/2021 and 30/04/2021. We then generate a forecast for the next 7 days, in this example between 01/05/2021 and 07/05/2021, and compare it to historic data from that time period. We can look at where the admitted number of patients for each hour lies compared to different confidence intervals and check that the correct amount of historic data lies within each confidence interval, for example 50% of the actual patients that arrived should fall within the 50% confidence interval predicted by the model.
 
 ### 3.1 Import required modules
 
@@ -79,7 +81,8 @@ import jax
 import jax.numpy as jnp
 import numpyro
 from jax import random
-from numpyro.infer import MCMC, NUTS, Predictive, init_to_median from collections import defaultdict
+from numpyro.infer import MCMC, NUTS, Predictive, init_to_median 
+from collections import defaultdict
 from scipy.stats import percentileofscore
 from sklearn.metrics import mean_absolute_error as mae
 from forecasting.time_series_model import gp
@@ -119,7 +122,8 @@ class Validation:
         self.training_start_date = None
 
     def run(self, rng_key, dates):
-        subkeys = jax.random.split(rng_key, num=len(dates)) results = {}
+        subkeys = jax.random.split(rng_key, num=len(dates)) 
+        results = {}
         for key, date in zip(subkeys, dates):
             y_train, y_test = self.split(date)
             training_data = self.prepare_data_dictionary(y_train, is_training=True)
@@ -137,7 +141,9 @@ class Validation:
     def split(self, date, validate=True):
         self._validate_split_date(date)
         past_datetimes = self.timeseries.loc[:date].index
-        future_datetimes = self.timeseries.index.difference(past_datetimes) training_datetimes = past_datetimes[-self.training_hours:] forecast_datetimes = future_datetimes[:self.forecast_hours]
+        future_datetimes = self.timeseries.index.difference(past_datetimes) 
+        training_datetimes = past_datetimes[-self.training_hours:] 
+        forecast_datetimes = future_datetimes[:self.forecast_hours]
         y_train = self.timeseries.loc[training_datetimes]
         y_test = self.timeseries.loc[forecast_datetimes]
         return y_train, y_test
@@ -168,8 +174,8 @@ class Validation:
         }
 
     def _validate_split_date(self, date): 
-    """
-    Do not split if Covid is very recently in the past or in the very near future. """
+        """
+        Do not split if Covid is very recently in the past or in the very near future. """
         if date >= self.COVID_START_DATE:
             dt_past = (date - self.COVID_START_DATE) / pd.Timedelta("1H")
             dt_future = (self.timeseries.index.max() - date) / pd.Timedelta("1H")
@@ -183,7 +189,9 @@ class Validation:
             assert (dt_past > self.training_hours), msg1 
             assert (dt_future > self.forecast_hours), msg2
         else:
-            dt_future = (self.COVID_START_DATE - date) / pd.Timedelta("1H") dt_past = (date - self.timeseries.index.min()) / pd.Timedelta("1H") msg1 = (
+            dt_future = (self.COVID_START_DATE - date) / pd.Timedelta("1H") 
+            dt_past = (date - self.timeseries.index.min()) / pd.Timedelta("1H") 
+            msg1 = (
                 f"At least {self.forecast_hours} validation hours are required"
                 f" but there's only {dt_future} hours until Covid starts." )
             msg2 = (
@@ -220,7 +228,8 @@ for date in selected_dates:
     try: 
         cv.split(date)
     except AssertionError: 
-        print(f"skipping {date}") continue
+        print(f"skipping {date}") 
+        continue
     else: 
         validation_dates.append(date)
 
@@ -252,12 +261,11 @@ for ax, date in zip(axes.flatten(), validation_dates):
     y, forecast, _ = result[date]
     ax.plot(y_train.iloc[-400:], marker='o', lw=0, label='Training data') 
     ax.plot(y, marker='o', lw=0, color='k', alpha=0.5, label='Validation data') 
-    ax.vlines(date, -2, 47, color='black', linestyles='dashed') 
+    ax.vlines(date, 0, max(y)+1, color='black', linestyles='dashed') 
     ribbon_plot(y.index, forecast, plot_median=False, ax=ax,ribbon_color='coral')
     ax.xaxis.set_major_formatter(ax_date_format) 
     ax.set_title(f"Validation date: {date: %d/%m/%Y at %H:%M}") 
     ax.legend()
-    ax.set_ylim([-2, 47])
     ax.set_xlim([min(y_train.iloc[-400:].index), max(y.index)]) 
     ax.set_ylabel("Hospital admissions")
 ```

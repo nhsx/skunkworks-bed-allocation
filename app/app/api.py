@@ -27,8 +27,9 @@ from hospital.people import Patient, patient_to_dict
 DIRNAME = os.path.dirname(__file__)
 
 # Flag to set if using real vs dummy data
-REAL_DATA = False
+REAL_DATA = True
 
+# Errors are not thrown as this creates a catch 22 when creating fake data
 if REAL_DATA:
 
     try:
@@ -36,9 +37,11 @@ if REAL_DATA:
             open(os.path.join(DIRNAME, "data/forecast_percentiles.pkl"), "rb")
         )
     except FileNotFoundError as e:
-        print("Forecast data not found, see "
-            "app/app/data/get_forecast_percentiles.py")
-        raise e
+        print(
+            "Warning: forecast data not found, see "
+            "app/app/data/get_forecast_percentiles.py"
+        )
+        # raise e
 
     try:
         ADMISSIONS = pd.read_csv(
@@ -46,14 +49,14 @@ if REAL_DATA:
             index_col=0,
         )
     except FileNotFoundError as e:
-        print("Training data not found")
-        raise e
+        print("Warning: training data not found")
+        # raise e
 
 try:
     WARDS = pd.read_csv(os.path.join(DIRNAME, "data/wards.csv"), index_col=0)
 except FileNotFoundError as e:
-    print("Ward file not found")
-    raise e
+    print("Warning: ward file not found")
+    # raise e
 
 
 FIELD_MAP = {
@@ -331,7 +334,7 @@ def calc_occupancy(ward: Ward) -> int:
 
 def get_forecast(day: str, time: int) -> List[np.ndarray]:
     """
-    If real data is being used, reads it in, otherwise generates synthetic. 
+    If real data is being used, reads it in, otherwise generates synthetic.
     Then saves to JSON format.
     """
 
@@ -393,10 +396,10 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
 
         # Changing times back to timestamps
         forecast["historic"]["time"] = pd.to_datetime(
-            forecast["historic"]["time"]
+            forecast["historic"]["time"], format="%d/%m/%Y %H:%M"
         )
         forecast["forecast"]["time"] = pd.to_datetime(
-            forecast["forecast"]["time"]
+            forecast["forecast"]["time"], format="%d/%m/%Y %H:%M"
         )
 
         # Cutting training data to just dates 4 days before forecast
@@ -409,6 +412,16 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
         training = ADMISSIONS.iloc[training_ids]
         training_time = training["ADMIT_DTTM"]
         training_data = training["Total"]
+
+        # Calculate y axis limit
+        y_limit = 0
+        for n in forecast["forecast"]["n_patients"]:
+            y_limit = max(n) if max(n) > y_limit else y_limit
+
+        for n in forecast["historic"]["n_patients"]:
+            y_limit = max(n) if max(n) > y_limit else y_limit
+
+        y_limit += 2
 
         data = []
         for period in ["forecast", "historic"]:
@@ -465,7 +478,7 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
                     forecast["forecast"]["time"][0],
                     forecast["forecast"]["time"][0],
                 ],
-                y=[-5, 50],
+                y=[-5, y_limit],
                 mode="lines",
                 line={"dash": "dash", "color": "black"},
                 showlegend=False,
@@ -481,7 +494,10 @@ def make_forecast_figure(forecast: Dict[str, Any]) -> go.Figure:
                     max(forecast["forecast"]["time"]),
                 ],
             },
-            "yaxis": {"title": "Admissions per hour", "range": [-2, 42],},
+            "yaxis": {
+                "title": "Admissions per hour",
+                "range": [-2, y_limit],
+            },
             "legend": {
                 "yanchor": "top",
                 "y": 0.99,

@@ -1,0 +1,10 @@
+{
+    "General Internal Medicine": true,
+    "General Surgery": false,
+    "Respiratory Medicine": true,
+    "Endocrinology and Diabetes": false,
+    "Geriatric Medicine": true,
+    "Gastroenterology": false,
+    "Cardiology": true,
+    "Trauma & Orthopaedic": true
+}

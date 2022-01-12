@@ -26,14 +26,18 @@ _MAP_SPECIALTIES = {
 
 
 try:
-    with open(os.path.join(DIRNAME, "specialty_info.json")) as json_file:
+    with open(
+        os.path.join(DIRNAME, "../../data/specialty_info.json")
+    ) as json_file:
         _SPECIALTY_INFO = json.load(json_file)
 except FileNotFoundError as e:
     print("Specialty info not found")
     raise e
 
 try:
-    with open(os.path.join(DIRNAME, "hourly_elective_prob.json")) as json_file:
+    with open(
+        os.path.join(DIRNAME, "../../data/hourly_elective_prob.json")
+    ) as json_file:
         _HOURLY_ELECTIVE_PROB = json.load(json_file)
 except FileNotFoundError as e:
     print("Hourly elective probability not found")

@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "ADMIT_DTTM": [
+                {
+                    "name": "ADMIT_DTTM",
+                    "description": "Date and time of admission, aggregated to every hour",
+                    "source": "PAS - Inpatient Spells",
+                    "type": "datetime64[ns]",
+                    "Entry options": "e.g. 05/06/2019 15:00:00"
+                }
+            ],
+            "Total": [
+                {
+                    "name": "Total",
+                    "description": "Total number of admissions for Medicine and Surgery patients for that hour",
+                    "source": "Aggregated from ADMIT_DTTM in PAS - Inpatient Spells",
+                    "type": "int64",
+                    "Entry options": "0-50+"
+                }
+            ]
+        }
+    ]
+}

@@ -16,6 +16,7 @@ In this example, our hospital will consist of 4 medical wards and 2 surgical war
 
 ```python
 import cloudpickle
+import pandas as pd
 
 from hospital.equipment.bed import Bed
 from hospital.building.room import BedBay, SideRoom
@@ -193,6 +194,51 @@ Now the hospital is generated, we can save it as a cloudpickle for further use:
 ```python
 with open("../data/hospital.pkl", "wb") as f:
     cloudpickle.dump(hospital, f)
+```
+
+For the UI, we need to capture the hospital configuration as a `.csv` file.
+
+_Note: you will need to generate specialty data first, which can be done with the [fake data generator](../../fake_data_generation)_
+
+```python
+# Import helper functions
+import sys
+sys.path.append(["../app/app","../src"])
+from api import _ward_covid_status
+from forecasting import patient_sampler
+
+# Create inverted specialities mapper
+_MAP_SPECIALTIES_INVERT = dict((v, k) for k, v in patient_sampler._MAP_SPECIALTIES.items())
+
+def _map_speciality_invert(specialty: str) -> str:
+    """Inverted map of historic patient's specialty to properties in Patient class."""
+
+    try:
+        return _MAP_SPECIALTIES_INVERT[specialty]
+    except KeyError:
+        print(f"Incorrect Patient Specialty: {specialty}")
+```
+
+```python
+# Create an empty dataframe
+df = pd.DataFrame()
+
+# Construct data structure for each ward
+for w in wards:
+    d = { 
+        'Ward name': w.name, 
+        'Ward Specialty': w.department.name.title(), 
+        'Specialty' : _map_speciality_invert(w.specialty[0].name),
+        'Ward sex' : "Mixed" if w.sex.name == "unknown" else w.sex.name.title(),
+        'Ward COVID-19 Status' : _ward_covid_status(w),
+        'Bed count (July 2021)': len(w.beds),
+        'Side room count': [isinstance(r, SideRoom) for r in w.rooms].count(True)
+        }
+    # Append ward to dataframe
+    df = df.append(d, ignore_index=True)
+
+# Save dataframe to csv
+df.to_csv("../app/app/data/wards.csv")
 ```
 
 ## 2. Admitting Patients and calculating penalties
