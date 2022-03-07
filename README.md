@@ -89,6 +89,31 @@ If you'd like to use your own data, please get in touch with us for support: ai-
 
 With the required artefacts in place, to launch the UI from your virtual environment, run `python app/run.py` which will listen on port 8888.
 
+## How do I explain this tool to my trust?
+
+Below are some FAQs to help answer some common queries around what the tool is and how it works
+
+##### What is the tool?
+- The Bed Allocation tool was produced to assist bed managers, as well as other colleagues involved in the process of allocating a bed to a patient on admission to a Trust's hospital.
+
+##### What does the tool do?
+- The tool is intended to be used in a Human-in-the-loop (HITL) approach (meaning the tool is an information source for a human, who makes decisions using the tool as well as other sources). The bed manager remains essential to the bed allocation process, making all decisions. The benefit of the Bed Allocation tool is that it automates some of the 'simpler' considerations made as part of the bed allocation process, freeing up the bed manager to spend more time and effort on the more. complex elements of their role which AI cannot assist with.
+- The constraints that the tool uses can be found here for wards, here for patients and here for rooms. These constraints help the tool to identify beds which might be appropriate for the patient. The constraints themselves are intended to be simple, clear and easily explainable rules around what a patient, ward or room can or cannot accommodate.
+- The GUI of the tool clearly displays the rationale of the suggestion that has been made. This is an important characteristic of the tool as it allows the user to clearly see all of the constraints that the tool tried to meet, and those which are being violated by a given bed allocation suggestion. This ensures that a bed manager understands why a given bed has been suggested, and enables them to make a decision as to whether that bed would be appropriate for that patient.
+
+##### What does the tool not do?
+- The tool does not attempt to capture the complex, nuanced understanding that a bed manager possesses, which only they can provide. This is why it's essential that the tool is used as part of a HITL approach, as the tool does not have the ability to consider many of the factors that a human bed manager would, and which could provide reasoning as to why a bed is not appropriate for a patient.
+
+##### Benefits of the tool
+- Automates aspects of a bed manager's role which can be easily encoded as rules
+- Frees up time for bed manager to provide insight on more complex and nuanced issues
+- Provides a transparent way to view how a bed allocation suggestion has been made
+
+##### Things to bear in mind
+- The tool still requires insight of a bed manager and all decisions should be taken by a bed manager (using HITL process)
+- The tool can only apply constraints which can be expressed as yes/no questions, and does not attempt to balance constraints off against one another.
+- The tool has been tested on a small dataset but has not been proven on a large, real-world dataset, and therefore is not ready for use in a real hospital setting. Applying the tool to a larger dataset could reveal areas where additional work is needed for the tool to be useful to bed managers.
+
 ## NHS AI Lab Skunkworks
 
 The project is supported by the NHS AI Lab Skunkworks, which exists within the NHS AI Lab at NHSX to support the health and care community to rapidly progress ideas from the conceptual stage to a proof of concept.
